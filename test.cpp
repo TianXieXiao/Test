@@ -1,29 +1,21 @@
 #include <iostream>
 using namespace std;
-class A1{
-public:
-	void f1()
-	{
-
-	}
-private:
-	int _a;
-};
-class A2{
-public:
-	void f2()
-	{
-
-	}
-};
-class A3
-{
-
-};
 int main()
 {
-	cout << sizeof(A1) << endl;
-	cout << sizeof(A2) << endl;
-	cout << sizeof(A3) << endl;
-	
+	static int monthday[13] = { 0, 31, 28, 31, 30, 31, 30, 31, 30, 31, 30, 31, 30 };
+	int year, month, day;
+	while (cin >> year >> month >> day)
+	{
+		int n = 0;
+		for (int i = 1; i < month; ++i){
+			n += monthday[i];
+		}
+		n += day;
+		if (month>2 && ((year % 4 == 0 && year % 100 != 0) || (year % 400 ==0)))
+		{
+			n += 1;
+		}
+		cout << n<<endl;
+	}
+	return 0;
 }
