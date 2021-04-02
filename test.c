@@ -1,31 +1,9 @@
-#include <iostream>
-using namespace std;
-class Time
-{
-public:
-	Time(int hour = 0)
-		:_hour(hour)
-	{
-		cout << "Time()" << endl;
-	}
-private:
-	int _hour;
-
-};
-class Date
-{
-public:
-	Date(int day)
-	{
-
-	}
-private:
-	int day;
-	Time _t;
-};
-
-
+#include <stdio.h>
 int main()
 {
-	Date d(1);
+	int a = 40;
+	int c = 212;
+	int ep = (-8 + 22)*a - 10 + c/2;
+	printf(" %d\n", ep);
+	return 0;
 }
