@@ -1,509 +1,227 @@
-
 #include<stdio.h>
+#include<string.h>
+#include<time.h>
 #include<stdbool.h>
 
-int main()
+unsigned long long Fib(int n)
 {
-	int i = 0;
-	int k = 0;
-	for (i = 0, k = 0; k = 0; i++, k++)
+	if(n <= 2)
+		return 1;
+
+	unsigned long long fib, fib1=1, fib2=1;
+	for(int i=3; i<=n; ++i)
 	{
-		printf("fjlajfaflajl\n");
-		k++;
+		fib = fib1 + fib2;
+		fib1 = fib2;
+		fib2 = fib;
 	}
-	return 0;
+	return fib;
 }
 
-
-
-/*
 void main()
 {
-	int i = 0;
-	//-128 ~ 127
-	for(char ch=0; ch<128; ++ch)
+	int n;
+	while(1)
 	{
-		printf("i = %d\n",i++);
-	}
-}
-
-/*
-void main()
-{
-	for(int i=1; i<=10; ++i)
-	{
-		if(i == 5)
-		{
-			//break; //跳出整个循环
-			continue;//跳出本次循环
-		}
-		printf("i = %d\n", i);
-	}
-
-}
-
-/*
-void main()
-{
-	int i = 1;
-	while(i < 1)
-	{
-		printf("i = %d\n", i);
-		++i;
-	}
-}
-
-/*
-void main()
-{
-	int i = 1;
-	do
-	{
-		printf("i = %d\n", i);
-		++i;
-	}while(i < 1);
-}
-
-/*
-void main()
-{
-	int i = 1;
-	while(i <= 10)
-	{
-		printf("i = %d\n", i);
-		++i;
-	}
-}
-
-/*
-int main()
-{
-	int n = 1;
-	int m = 2;
-	switch (n)
-	{
-	case 1:
-		m++;
-	case 2:
-		n++;
-	case 3:
-		switch (n)
-		{//switch允许嵌套使用
-		case 1:
-			n++;
-		case 2:
-			m++;
-			n++;
+		printf("input n:>");
+		scanf("%d", &n);
+		if(n == -1)
 			break;
-		}
-	case 4:
-		m++;
-		break;
-	default:
-		break;
+
+		size_t result = Fib(n);
+		printf("第%d项的斐波那契值 = %ul\n", n, result);
 	}
-	printf("m = %d, n = %d\n", m, n);
+}
+
+/*
+unsigned long long Fib(int n)
+{
+	if(n <= 2)
+		return 1;
+	else
+		return Fib(n-1) + Fib(n-2);
+}
+
+void main()
+{
+	int n;
+	while(1)
+	{
+		printf("input n:>");
+		scanf("%d", &n);
+		if(n == -1)
+			break;
+
+		size_t result = Fib(n);
+		printf("第%d项的斐波那契值 = %d\n", n, result);
+	}
+}
+
+/*
+void print(int n)
+{
+	if (n > 9)
+	{
+		print(n / 10);  //123  12 1
+	}
+	printf("%d ", n % 10);
+}
+
+int main()
+{
+	int num = 1234;
+	print(num); //1 2 3 4
 	return 0;
 }
 
+
+
 /*
-void main()
+//n! = 1*2*3*.....*n
+//OJ 迭代  循环
+//递归
+
+size_t Fact(int n)
 {
-	int year, month;
-	printf("Plase input year and month:>");
-	scanf("%d %d", &year, &month);
-
-	int days;
-
-	switch(month)
+	size_t ret = 1;
+	for(int i=1; i<=n; ++i)
 	{
-	case 1:
-	case 3:
-	case 5:
-	case 7:
-	case 8:
-	case 10:
-	case 12:
-		days = 31;
-		break;
-	case 2:
-		if((year%4==0&&year%100!=0) || (year%400==0))
-			days = 29;
-		else
-			days = 28;
-		break;
-	case 4:
-	case 6:
-	case 9:
-	case 11:
-		days = 30;
-		break;
-	
-	default:
-		printf("月份有误，程序结束.\n");
-		return;
+		ret *= i;
 	}
-	printf("%d 年的 %d 月 有 %d 天.\n", year, month, days);
+	return ret;
 }
 
-/*
 void main()
 {
-	float f = 12.3;
-	int a=1, b=2;
-
-	char ch = 'A';
-
-	//整形  整形表达式
-	switch(ch)
+	int n;
+	while(1)
 	{
-	default:
-		break;
-	case 'A':
-		break;
+		printf("input n:>");
+		scanf("%d", &n);
+		if(n == -1)
+			break;
+
+		size_t result = Fact(n);
+		printf("%d! = %d\n", n, result);
 	}
-}
-
-/*
-void main()
-{
-	int year, month;
-	printf("Plase input year and month:>");
-	scanf("%d %d", &year, &month);
-
-	int days;
-
-	switch(month)
-	{
-	case 1:
-	case 3:
-	case 5:
-	case 7:
-	case 8:
-	case 10:
-	case 12:
-		days = 31;
-		break;
-	case 2:
-		if((year%4==0&&year%100!=0) || (year%400==0))
-			days = 29;
-		else
-			days = 28;
-		break;
-	case 4:
-	case 6:
-	case 9:
-	case 11:
-		days = 30;
-		break;
-	default:
-		printf("月份有误，程序结束.\n");
-		return;
-	}
-	printf("%d 年的 %d 月 有 %d 天.\n", year, month, days);
-}
-
-/*
-void main()
-{
-	int year, month;
-	printf("Plase input year and month:>");
-	scanf("%d %d", &year, &month);
-
-	int days;
-
-	switch(month)
-	{
-	case 1:
-		days = 31;
-		break;
-	case 2:
-		if((year%4==0&&year%100!=0) || (year%400==0))
-			days = 29;
-		else
-			days = 28;
-		break;
-	case 3:
-		days = 31;
-		break;
-	case 4:
-		days = 30;
-		break;
-	case 5:
-		days = 31;
-		break;
-	case 6:
-		days = 30;
-		break;
-	case 7:
-		days = 31;
-		break;
-	case 8:
-		days = 31;
-		break;
-	case 9:
-		days = 30;
-		break;
-	case 10:
-		days = 31;
-		break;
-	case 11:
-		days = 30;
-		break;
-	case 12:
-		days = 31;
-		break;
-	default:
-		printf("月份有误，程序结束.\n");
-		return;
-	}
-	printf("%d 年的 %d 月 有 %d 天.\n", year, month, days);
-}
-
-/*
-void main()
-{
-	int year, month;
-	printf("Plase input year and month:>");
-	scanf("%d %d", &year, &month);
-
-	if(month<=0 || month>12)
-	{
-		printf("月份有误，程序结束.\n");
-		return;
-	}
-
-	int days;
-
-	if(month==1 || month==3 || month==5 || month==7
-	   || month==8 || month==10 || month==12)
-		days = 31;
-	else if(month == 2)
-	{
-		if((year%4==0&&year%100!=0) || (year%400==0))
-			days = 29;
-		else
-			days = 28;
-	}
-	else 
-		days = 30;
-
-	printf("%d 年的 %d 月 有 %d 天.\n", year, month, days);
 }
 
 
 /*
-int main()
+size_t Fact(int n)
+{
+	if(n == 1)
+		return 1;
+	else
+		return n*Fact(n-1);
+}
+
+void main()
+{
+	int n;
+	while(1)
+	{
+		printf("input n:>");
+		scanf("%d", &n);
+		if(n == -1)
+			break;
+
+		size_t result = Fact(n);
+		printf("%d! = %d\n", n, result);
+	}
+}
+
+/*
+size_t Fact(int n)
+{
+	size_t ret = 1;
+	for(int i=1; i<=n; ++i)
+	{
+		ret *= i;
+	}
+	return ret;
+}
+
+void main()
+{
+	int n;
+	while(1)
+	{
+		printf("input n:>");
+		scanf("%d", &n);
+		if(n == -1)
+			break;
+
+		size_t result = Fact(n);
+		printf("%d! = %d\n", n, result);
+	}
+}
+
+/*
+#include"Max.h" 
+#include"Min.h"
+
+void main()
 {
 	int a = 1;
 	int b = 2;
-	if (a == 1)
-	{
-		if (b == 2)
-		{
-			printf("hehe\n");
-		}	
-		else
-		{
-			printf("haha\n");
-		}
-	}
-	return 0;
+	int result = Max(a, b);
+	printf("max value = %d\n", result);
+	result = Min(a, b);
+	printf("min value = %d\n", result);
 }
 
 /*
-int main()
+int Max(int a, int b);
+void fun();
+
+void main()
 {
 	int a = 1;
 	int b = 2;
-	if (a == 1)
-	{
-		if (b == 2)
-			printf("hehe\n");
-	}
-	else
-	{
-		printf("haha\n");
-	}
-	return 0;
+	int result = Max(a, b);
+	printf("result = %d\n", result);
+	fun();
 }
 
-/*
-// 1 2 3 4 5 6 7 8 9 10 11 12
-
-void main()
+void fun()
 {
-	int year, month;
-	printf("Plase input year and month:>");
-	scanf("%d %d", &year, &month);
-
-	if(month<=0 || month>12)
-	{
-		printf("月份有误，程序结束.\n");
-		return;
-	}
-
-	if(month==1 || month==3 || month==5 || month==7
-	   || month==8 || month==10 || month==12)
-		printf("31");
-	else if(month == 2)
-	{
-		if((year%4==0&&year%100!=0) || (year%400==0))
-			printf("29");
-		else
-			printf("28");
-	}
-	else 
-		printf("30");
+	printf("aaaaaaaaaaa\n");
+	Max(1,2);
 }
+
+int Max(int a, int b)
+{
+	fun();
+	return a > b ? a : b;
+}
+
+
+
 
 /*
 void main()
 {
-	int year, month;
-	printf("Plase input year and month:>");
-	scanf("%d %d", &year, &month);
+	char str[20] = "HelloC++";
+	int len = strlen(str);  //字符串有效长度
+	printf("len = %d\n", len);
 
-	if(month == 1)
-		printf("31");
-	else if(month == 2)
-	{
-		if((year%4==0&&year%100!=0) || (year%400==0))
-			printf("29");
-		else
-			printf("28");
-	}
-	else if(month == 3)
-		printf("31");
-	else if(month == 4)
-		printf("30");
-	else if(month == 5)
-		printf("31");
-	else if(month == 6)
-		printf("30");
-	else if(month == 7)
-		printf("31");
-	else if(month == 8)
-		printf("31");
-	else if(month == 9)
-		printf("30");
-	else if(month == 10)
-		printf("31");
-	else if(month == 11)
-		printf("30");
-	else if(month == 12)
-		printf("31");
-}
+	char str1[20] = "Hello ";
+	char str2[] = "C++";
+	printf("str1 = %s\n", str1);
+	strcat(str1, str2);  //字符串的链接
+	printf("str1 = %s\n", str1);
 
-/*
-void main()
-{
-	int a = 10;
-	
-	if(a == 10)
-	{
-		printf("A.\n");
-	}
-	else if(a == 20)
-	{
-		printf("B.\n");
-	}
-	else if(a != 0)
-	{
-		printf("OK.\n");
-	}
-	else
-	{
-		printf("Error.\n");
-	}
-}
+	char str3[20] = "Hello ";
+	char str4[] = "C++";
+	printf("str3 = %s\n", str3);
+	strcpy(str3, str4);  //字符串的拷贝
+	printf("str3 = %s\n", str3);
 
-/*
-struct Student
-{
-	char name[10];
-	int age;
-	char sex[3];
-};
-
-void main()
-{
-	struct Student s1 = {"比特", 10, "男"};
-	printf("%s %d %s\n", s1.name, s1.age, s1.sex);
-}
-
-
-/*
-void  main()
-{
-	printf("bool = %d\n", sizeof(bool*));
-	printf("short = %d\n", sizeof(short*));
-	printf("int = %d\n", sizeof(int*));
-	printf("long = %d\n", sizeof(long*));
-	printf("float = %d\n", sizeof(float*));
-	printf("double = %d\n", sizeof(double*));
-	printf("long long = %d\n", sizeof(long long*));
-}
-
-/*
-void main()
-{
-	int a = 100;
-
-	int *p = &a;  //
-	
-	printf("p size = %d\n", sizeof(p));
-
-	printf("a = %d\n", a);
-	printf("a = %d\n", *p);
-	printf("&a = %p\n",&a);
-}
-
-/*#include"fun.h"
-
-extern int global;
-
-void main()
-{
-	int a = 10;
-	int b = 20;
-	int max_value = Max(a, b);
-	printf("max value = %d\n", max_value);
-
-	printf("global = %d\n", global);
-}
-
-/*
-int fun()
-{
-	static int i = 0;
-	i++;
-	return i;
-}
-
-void main()
-{
-	int ret = fun();
+	char str5[] = "Hello falfj";
+	char str6[] = "Hello";
+	int ret = strcmp(str5, str6); //字符串的比较
 	printf("ret = %d\n", ret);
-	ret = fun();
-	printf("ret = %d\n", ret);
-	ret = fun();
-	printf("ret = %d\n", ret);
-}
-
-/*
-//宏定义
-#define U_LONG unsigned long
-typedef unsigned long u_long;
-
-void main()
-{
-	unsigned long val;
-	U_LONG data;
-	u_long dat;
-
-	//char short int float double
-	size_t type;
 }
 
 /*
@@ -514,90 +232,175 @@ int Max(int a, int b)
 
 void main()
 {
-	int ret = (10, 20, 30, 40);
-	printf("ret = %d\n", ret);
-	printf("max value = %d\n", Max(10,20));
+	int a = 10;
+	int b = 30;
+	int c = 20;
+	int result = Max( Max(a, b), c );
+	printf("result = %d\n", result);
+
+}
+
+/*
+void fun()
+{
+	printf("This is fun().\n");
+}
+
+void PrintFun(int n)
+{
+	for(int i=0; i<n; ++i)
+	{
+		fun();
+	}
+}
+void main()
+{
+	int n;
+	printf("input n:>");
+	scanf("%d", &n);
+
+	PrintFun(n);
 }
 
 
 /*
+//效率不高  改进
+bool IsPrime(int value)
+{
+	for(int i=2; i<value/2; ++i)
+	{
+		if(value % i == 0)
+			return false;
+	}
+	return true;
+}
+
+bool IsLeap(int year)
+{
+	return (((year % 4 == 0) && (year % 100 != 0)) || (year % 400==0));
+}
+
+
+int Increment()
+{
+	static int num = 0;
+	num +=1;
+	return num;
+}
+
+void main()
+{
+	int num = Increment();  //num = num + 1;
+	printf("num = %d\n", num);
+
+	num = Increment(num);  //num = num + 1;
+	printf("num = %d\n", num);
+
+	num = Increment(num);  //num = num + 1;
+	printf("num = %d\n", num);
+}
+
+/*
+void main()
+{
+	int num = 0;
+	num = Increment(num);  //num = num + 1;
+	printf("num = %d\n", num);
+
+	num = Increment(num);  //num = num + 1;
+	printf("num = %d\n", num);
+
+	num = Increment(num);  //num = num + 1;
+	printf("num = %d\n", num);
+}
+
+/*
+void main()
+{
+	int value;
+	while(1)
+	{
+		printf("Please input a number[以-1结束]:>");
+		scanf("%d", &value);
+		if(value == -1)
+			break;
+
+		//bool flag = IsPrime(value);
+		int flag = IsLeap(value);
+
+		if(flag == 0) 
+			printf("OK.\n");
+		else
+			printf("NO.\n");
+	}
+}
+
+/*
+//返回值  函数名  (参数列表)  {函数体}
+int Sum(int a, int b)
+{
+	int result = a + b;
+	return result;
+}
 int Max(int a, int b)
 {
-	if(a > b)
-		return a;
-	return b;
+	return a > b ? a : b;   //选择结构
 }
 
-void main()
+void Swap(int x, int y)
 {
-	printf("max value = %d\n", Max(10,20));
+	int tmp = x;
+	x = y;
+	y = tmp;
 }
-
-/*
-void main()
+void  main()
 {
-	int i = 0;
-
-	printf("%d %d %d %d\n", i++, ++i, i++, ++i);
-	     //0   2  2  4
-	     //0   1  1  2
-
-	printf("i = %d\n", i);
-	     //4
-}
-
-
-/*
-//逻辑运算符 && || ！
-void main()
-{
-	int a = 0;
-	int b = 1;
-	int ret = a && ++b; //短路求值
-
-	printf("ret = %d\n", ret); //1
-	printf("b = %d\n", b);     //1
-}
-
-/*
-//位运算
-void main()
-{
-	int a = 10;   //0000 1010
-	int b = 10;   //0001 0110
-
-	//int ret = a & b;  
-	//int ret = a | b; 
-	//int ret = a ^ b;
-
-	// 0000 0000 0000 0000 0000 0000 0000 1010
-	// 1111 1111 1111 1111 1111 1111 1111 0101
-	// 1111 1111 1111 1111 1111 1111 1111 0100
-	// 1000 0000 0000 0000 0000 0000 0000 1011
-
-	int ret = ~a;
-	printf("ret = %d\n", ret);
-}
-
-/*
-//>>右移  <<左移
-void main()
-{
-	// 0110 0100
 	int a = 100;
-	//int ret = a >> 2;   //a / 2^2
-	int ret = a << 2;     //a * 2^2
+	int b = 20;
+	int result = Sum(a, b);
+	printf("result = %d\n", result);
+	int max_value = Max(a, b);
+	printf("max value = %d\n", max_value);
+	//交换两数
+	printf("before: a = %d, b = %d\n", a, b);
+	Swap(a, b);
+	printf("after: a = %d, b = %d\n", a, b);
+}
 
-	printf("ret = %d\n", ret);
+/*
+void Swap(int *a, int *b)
+{
+	int tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+void  main()
+{
+	int a = 100;
+	int b = 20;
+	int result = Sum(a, b);
+	printf("result = %d\n", result);
+	int max_value = Max(a, b);
+	printf("max value = %d\n", max_value);
+	//交换两数
+	printf("before: a = %d, b = %d\n", a, b);
+	Swap(&a, &b);
+	printf("after: a = %d, b = %d\n", a, b);
 }
 
 /*
 void main()
 {
-	int a = 10;
-	int b = 3;
+	time_t te;
+	time(&te);
+	printf("%s\n", ctime(&te));
+}
 
-	int ret = a / b;  //整除
-	
+/*
+void main()
+{
+	char *str = "Hellohflkakfl";  //字符串
+	int len = strlen(str);
+	printf("str length = %d\n", len);
 }
 */
