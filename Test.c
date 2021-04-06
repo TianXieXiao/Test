@@ -1,406 +1,234 @@
 #include<stdio.h>
-#include<string.h>
-#include<time.h>
-#include<stdbool.h>
-
-unsigned long long Fib(int n)
-{
-	if(n <= 2)
-		return 1;
-
-	unsigned long long fib, fib1=1, fib2=1;
-	for(int i=3; i<=n; ++i)
-	{
-		fib = fib1 + fib2;
-		fib1 = fib2;
-		fib2 = fib;
-	}
-	return fib;
-}
+#include"../../rocket.h"
 
 void main()
 {
-	int n;
-	while(1)
-	{
-		printf("input n:>");
-		scanf("%d", &n);
-		if(n == -1)
-			break;
+	int ar[] = {1,2,3,4,5,6,7,8,9,10};
 
-		size_t result = Fib(n);
-		printf("第%d项的斐波那契值 = %ul\n", n, result);
+	printf("%d\n", ar[0]);
+	printf("%p\n", &ar[0]);
+	printf("%p\n", ar);
+	printf("%p\n", &ar);
+}
+
+/*
+#define ROW 5
+#define COL 8
+
+void main()
+{
+	int ar[ROW][COL];
+	for(int i=0; i<ROW; ++i)
+	{
+		for(int j=0; j<COL; ++j)
+		{
+			ar[i][j] = i+j;
+		}
+	}
+
+	for(int i=0; i<ROW; ++i)
+	{
+		for(int j=0; j<COL; ++j)
+		{
+			printf("%d ", ar[i][j]);
+		}
+		printf("\n");
 	}
 }
 
 /*
-unsigned long long Fib(int n)
+void main()
 {
-	if(n <= 2)
-		return 1;
+	int ar[3][3];
+	//printf("size = %d\n", sizeof(ar));
+	int br[3][3] = {1,2,3,4,5,6,7,8,9};
+	int cr[3][3] = {{1},{2},{3}};
+
+	int dr[][3] = {1,2,3,4,5,6,7,8};
+}
+
+/*
+int FindMax(int ar[], int left, int right)
+{
+	int max_value = ar[left]; //初始化
+
+	for(int i=left+1; i<right; ++i)   //[   )
+	{
+		if(ar[i] > max_value)
+		{
+			max_value = ar[i];
+		}
+	}
+	return max_value;
+}
+
+int FindSecMax(int ar[], int left, int right)
+{
+	int first, second;
+	if(ar[left] > ar[left+1])
+	{
+		first = ar[left];
+		second = ar[left+1];
+	}
 	else
-		return Fib(n-1) + Fib(n-2);
+	{
+		first = ar[left+1];
+		second = ar[left];
+	}
+
+	for(int i=left+2; i<right; ++i)
+	{
+		if(ar[i] > first)
+		{
+			second = first;
+			first = ar[i];
+		}
+		else if(ar[i] > second)
+		{
+			second = ar[i];
+		}
+	}
+	return second;
 }
 
-void main()
+void ReverseArray(int ar[], int left, int right)
 {
-	int n;
-	while(1)
+	int low = left;
+	int high = right - 1;
+	while(low < high)
 	{
-		printf("input n:>");
-		scanf("%d", &n);
-		if(n == -1)
-			break;
+		int tmp = ar[low];
+		ar[low] = ar[high];
+		ar[high] = tmp;
 
-		size_t result = Fib(n);
-		printf("第%d项的斐波那契值 = %d\n", n, result);
+		low++;
+		high--;
 	}
 }
 
-/*
-void print(int n)
+int Find(int ar[], int left, int right, int key)
 {
-	if (n > 9)
+	for(int i=left; i<right; ++i)
 	{
-		print(n / 10);  //123  12 1
+		if(ar[i] == key)
+			return i;
 	}
-	printf("%d ", n % 10);
+	return -1;
 }
 
-int main()
+void Sort(int ar[], int left, int right)
 {
-	int num = 1234;
-	print(num); //1 2 3 4
-	return 0;
-}
-
-
-
-/*
-//n! = 1*2*3*.....*n
-//OJ 迭代  循环
-//递归
-
-size_t Fact(int n)
-{
-	size_t ret = 1;
-	for(int i=1; i<=n; ++i)
+	//冒泡排序
+	for (int i = left; i < right-1; i++)
 	{
-		ret *= i;
-	}
-	return ret;
-}
-
-void main()
-{
-	int n;
-	while(1)
-	{
-		printf("input n:>");
-		scanf("%d", &n);
-		if(n == -1)
-			break;
-
-		size_t result = Fact(n);
-		printf("%d! = %d\n", n, result);
+		for (int j = left; j < right+left-1-i; j++)
+		{
+			if (ar[j] > ar[j + 1])
+			{
+				int tmp = ar[j];
+				ar[j] = ar[j + 1];
+				ar[j + 1] = tmp;
+			}
+		}
 	}
 }
 
-
-/*
-size_t Fact(int n)
+int BinSearch(int ar[], int left, int right, int key)
 {
-	if(n == 1)
-		return 1;
+	int low = left;
+	int high = right - 1;
+
+	while(low <= high)
+	{
+		int mid = (low + high) / 2;
+		if(key == ar[mid])
+			return mid;
+		else if(key < ar[mid])
+			high = mid - 1;
+		else
+			low = mid + 1;
+	}
+	return -1;
+}
+
+void  main()
+{
+	int ar[] = {1, 2, 300, 4, 50, 6, 40, 7, 8, 9, 10};
+
+	int n = sizeof(ar) / sizeof(ar[0]);
+	
+	int max_value = FindMax(ar, 0, n);
+	printf("max value = %d\n", max_value);
+
+	int sec_max_value = FindSecMax(ar, 0, n);
+	printf("second max value = %d\n", sec_max_value);
+
+	PrintArray(ar, 0, n);
+	//ReverseArray(ar, 0, n);
+	Sort(ar, 0, n);
+	PrintArray(ar, 0, n);
+
+	int key = 3000;
+	int index = BinSearch(ar, 0, n, key);
+	if(index == -1)
+		printf("Error.\n");
 	else
-		return n*Fact(n-1);
-}
-
-void main()
-{
-	int n;
-	while(1)
-	{
-		printf("input n:>");
-		scanf("%d", &n);
-		if(n == -1)
-			break;
-
-		size_t result = Fact(n);
-		printf("%d! = %d\n", n, result);
-	}
+		printf("index = %d\n", index);
 }
 
 /*
-size_t Fact(int n)
+void  main()
 {
-	size_t ret = 1;
-	for(int i=1; i<=n; ++i)
-	{
-		ret *= i;
-	}
-	return ret;
-}
+	int ar[] = {1,2,3,4,5,6,7,8,9,10};
+	int n = sizeof(ar) / sizeof(ar[0]);
 
-void main()
-{
-	int n;
-	while(1)
-	{
-		printf("input n:>");
-		scanf("%d", &n);
-		if(n == -1)
-			break;
-
-		size_t result = Fact(n);
-		printf("%d! = %d\n", n, result);
-	}
-}
-
-/*
-#include"Max.h" 
-#include"Min.h"
-
-void main()
-{
-	int a = 1;
-	int b = 2;
-	int result = Max(a, b);
-	printf("max value = %d\n", result);
-	result = Min(a, b);
-	printf("min value = %d\n", result);
-}
-
-/*
-int Max(int a, int b);
-void fun();
-
-void main()
-{
-	int a = 1;
-	int b = 2;
-	int result = Max(a, b);
-	printf("result = %d\n", result);
-	fun();
-}
-
-void fun()
-{
-	printf("aaaaaaaaaaa\n");
-	Max(1,2);
-}
-
-int Max(int a, int b)
-{
-	fun();
-	return a > b ? a : b;
-}
-
-
-
-
-/*
-void main()
-{
-	char str[20] = "HelloC++";
-	int len = strlen(str);  //字符串有效长度
-	printf("len = %d\n", len);
-
-	char str1[20] = "Hello ";
-	char str2[] = "C++";
-	printf("str1 = %s\n", str1);
-	strcat(str1, str2);  //字符串的链接
-	printf("str1 = %s\n", str1);
-
-	char str3[20] = "Hello ";
-	char str4[] = "C++";
-	printf("str3 = %s\n", str3);
-	strcpy(str3, str4);  //字符串的拷贝
-	printf("str3 = %s\n", str3);
-
-	char str5[] = "Hello falfj";
-	char str6[] = "Hello";
-	int ret = strcmp(str5, str6); //字符串的比较
-	printf("ret = %d\n", ret);
-}
-
-/*
-int Max(int a, int b)
-{
-	return a > b ? a : b;
-}
-
-void main()
-{
-	int a = 10;
-	int b = 30;
-	int c = 20;
-	int result = Max( Max(a, b), c );
-	printf("result = %d\n", result);
-
-}
-
-/*
-void fun()
-{
-	printf("This is fun().\n");
-}
-
-void PrintFun(int n)
-{
 	for(int i=0; i<n; ++i)
 	{
-		fun();
+		//printf("%d ", ar[i]);
+		printf("%p : %d\n", &ar[i], ar[i]);
 	}
-}
-void main()
-{
-	int n;
-	printf("input n:>");
-	scanf("%d", &n);
-
-	PrintFun(n);
-}
-
-
-/*
-//效率不高  改进
-bool IsPrime(int value)
-{
-	for(int i=2; i<value/2; ++i)
-	{
-		if(value % i == 0)
-			return false;
-	}
-	return true;
-}
-
-bool IsLeap(int year)
-{
-	return (((year % 4 == 0) && (year % 100 != 0)) || (year % 400==0));
-}
-
-
-int Increment()
-{
-	static int num = 0;
-	num +=1;
-	return num;
-}
-
-void main()
-{
-	int num = Increment();  //num = num + 1;
-	printf("num = %d\n", num);
-
-	num = Increment(num);  //num = num + 1;
-	printf("num = %d\n", num);
-
-	num = Increment(num);  //num = num + 1;
-	printf("num = %d\n", num);
+	printf("\n");
 }
 
 /*
 void main()
 {
-	int num = 0;
-	num = Increment(num);  //num = num + 1;
-	printf("num = %d\n", num);
-
-	num = Increment(num);  //num = num + 1;
-	printf("num = %d\n", num);
-
-	num = Increment(num);  //num = num + 1;
-	printf("num = %d\n", num);
+	char str[10] = {'a','b','c'};
+	char str1[3] = "abc";
 }
 
 /*
-void main()
-{
-	int value;
-	while(1)
-	{
-		printf("Please input a number[以-1结束]:>");
-		scanf("%d", &value);
-		if(value == -1)
-			break;
-
-		//bool flag = IsPrime(value);
-		int flag = IsLeap(value);
-
-		if(flag == 0) 
-			printf("OK.\n");
-		else
-			printf("NO.\n");
-	}
-}
-
-/*
-//返回值  函数名  (参数列表)  {函数体}
-int Sum(int a, int b)
-{
-	int result = a + b;
-	return result;
-}
-int Max(int a, int b)
-{
-	return a > b ? a : b;   //选择结构
-}
-
-void Swap(int x, int y)
-{
-	int tmp = x;
-	x = y;
-	y = tmp;
-}
+int dr[10];
 void  main()
 {
-	int a = 100;
-	int b = 20;
-	int result = Sum(a, b);
-	printf("result = %d\n", result);
-	int max_value = Max(a, b);
-	printf("max value = %d\n", max_value);
-	//交换两数
-	printf("before: a = %d, b = %d\n", a, b);
-	Swap(a, b);
-	printf("after: a = %d, b = %d\n", a, b);
+	int ar[10];
+	int br[10] = {1,2,3,4,5,6,7,8,9,10};
+	int cr[10] = {1,2,3,4,5};
+	int er[10] = {1,2,3,4,5,6,7,8,9,10};
+
+	int fr[] = {1,2,3,4,5,6,7,8,9,1,2,3,4};
+	int n = sizeof(fr) / sizeof(fr[0]);
 }
 
 /*
-void Swap(int *a, int *b)
+#define N 10
+
+void main()
 {
-	int tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
-void  main()
-{
-	int a = 100;
-	int b = 20;
-	int result = Sum(a, b);
-	printf("result = %d\n", result);
-	int max_value = Max(a, b);
-	printf("max value = %d\n", max_value);
-	//交换两数
-	printf("before: a = %d, b = %d\n", a, b);
-	Swap(&a, &b);
-	printf("after: a = %d, b = %d\n", a, b);
+	int ar[10];
+	//printf("size = %d\n", sizeof(ar));
+	//const int n = 10;
+	//int br[n];
+
+	int cr[3+2];
+
+	int dr[N];
 }
 
 /*
 void main()
 {
-	time_t te;
-	time(&te);
-	printf("%s\n", ctime(&te));
-}
-
-/*
-void main()
-{
-	char *str = "Hellohflkakfl";  //字符串
-	int len = strlen(str);
-	printf("str length = %d\n", len);
+	//数组简化相同类型的变量定义；
+	int a[1000000];
 }
 */
