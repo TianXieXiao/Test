@@ -1,234 +1,455 @@
 #include<stdio.h>
-#include"../../rocket.h"
+#include<time.h>
 
-void main()
+//#define ADD 1
+//#define SUB 2
+//#define MUL 3
+//#define DIV 4
+//#define MOD 5
+//#define QUIT 0
+
+enum OP_STATE_ENUM
 {
-	int ar[] = {1,2,3,4,5,6,7,8,9,10};
+	QUIT = 0,
+	ADD,
+	SUB,
+	MUL,
+	DIV,
+	MOD
+};
 
-	printf("%d\n", ar[0]);
-	printf("%p\n", &ar[0]);
-	printf("%p\n", ar);
-	printf("%p\n", &ar);
-}
-
-/*
-#define ROW 5
-#define COL 8
-
-void main()
+void menu()
 {
-	int ar[ROW][COL];
-	for(int i=0; i<ROW; ++i)
-	{
-		for(int j=0; j<COL; ++j)
-		{
-			ar[i][j] = i+j;
-		}
-	}
+	system("title 简易计算器");
+	system("mode con cols=35 lines=11");
+	system("color 0F");
 
-	for(int i=0; i<ROW; ++i)
-	{
-		for(int j=0; j<COL; ++j)
-		{
-			printf("%d ", ar[i][j]);
-		}
-		printf("\n");
-	}
-}
-
-/*
-void main()
-{
-	int ar[3][3];
-	//printf("size = %d\n", sizeof(ar));
-	int br[3][3] = {1,2,3,4,5,6,7,8,9};
-	int cr[3][3] = {{1},{2},{3}};
-
-	int dr[][3] = {1,2,3,4,5,6,7,8};
-}
-
-/*
-int FindMax(int ar[], int left, int right)
-{
-	int max_value = ar[left]; //初始化
-
-	for(int i=left+1; i<right; ++i)   //[   )
-	{
-		if(ar[i] > max_value)
-		{
-			max_value = ar[i];
-		}
-	}
-	return max_value;
-}
-
-int FindSecMax(int ar[], int left, int right)
-{
-	int first, second;
-	if(ar[left] > ar[left+1])
-	{
-		first = ar[left];
-		second = ar[left+1];
-	}
-	else
-	{
-		first = ar[left+1];
-		second = ar[left];
-	}
-
-	for(int i=left+2; i<right; ++i)
-	{
-		if(ar[i] > first)
-		{
-			second = first;
-			first = ar[i];
-		}
-		else if(ar[i] > second)
-		{
-			second = ar[i];
-		}
-	}
-	return second;
-}
-
-void ReverseArray(int ar[], int left, int right)
-{
-	int low = left;
-	int high = right - 1;
-	while(low < high)
-	{
-		int tmp = ar[low];
-		ar[low] = ar[high];
-		ar[high] = tmp;
-
-		low++;
-		high--;
-	}
-}
-
-int Find(int ar[], int left, int right, int key)
-{
-	for(int i=left; i<right; ++i)
-	{
-		if(ar[i] == key)
-			return i;
-	}
-	return -1;
-}
-
-void Sort(int ar[], int left, int right)
-{
-	//冒泡排序
-	for (int i = left; i < right-1; i++)
-	{
-		for (int j = left; j < right+left-1-i; j++)
-		{
-			if (ar[j] > ar[j + 1])
-			{
-				int tmp = ar[j];
-				ar[j] = ar[j + 1];
-				ar[j + 1] = tmp;
-			}
-		}
-	}
-}
-
-int BinSearch(int ar[], int left, int right, int key)
-{
-	int low = left;
-	int high = right - 1;
-
-	while(low <= high)
-	{
-		int mid = (low + high) / 2;
-		if(key == ar[mid])
-			return mid;
-		else if(key < ar[mid])
-			high = mid - 1;
-		else
-			low = mid + 1;
-	}
-	return -1;
-}
-
-void  main()
-{
-	int ar[] = {1, 2, 300, 4, 50, 6, 40, 7, 8, 9, 10};
-
-	int n = sizeof(ar) / sizeof(ar[0]);
+	printf("**********************************\n");
+	printf("*         简 易 计 算 器         *\n");
+	printf("**********************************\n");
+	printf("* [1]  Add          [2] Sub      *\n");
+	printf("* [3]  Mul          [4] Div      *\n");
+	printf("* [5]  Mod          [6] Quit     *\n");
+	printf("**********************************\n");
 	
-	int max_value = FindMax(ar, 0, n);
-	printf("max value = %d\n", max_value);
-
-	int sec_max_value = FindSecMax(ar, 0, n);
-	printf("second max value = %d\n", sec_max_value);
-
-	PrintArray(ar, 0, n);
-	//ReverseArray(ar, 0, n);
-	Sort(ar, 0, n);
-	PrintArray(ar, 0, n);
-
-	int key = 3000;
-	int index = BinSearch(ar, 0, n, key);
-	if(index == -1)
-		printf("Error.\n");
-	else
-		printf("index = %d\n", index);
 }
 
-/*
-void  main()
+void main()
 {
-	int ar[] = {1,2,3,4,5,6,7,8,9,10};
-	int n = sizeof(ar) / sizeof(ar[0]);
-
-	for(int i=0; i<n; ++i)
+	int op1, op2, result;
+	int select = 1;
+	while(select)
 	{
-		//printf("%d ", ar[i]);
-		printf("%p : %d\n", &ar[i], ar[i]);
+		menu();
+		printf("请选择:>");
+		scanf("%d", &select);
+		if(select == QUIT)
+			break;
+		
+		printf("请输入操作数 op1 和 op2:>");
+		scanf("%d %d", &op1, &op2);
+
+		switch(select)
+		{
+			//魔鬼数字
+		case ADD:
+			result = op1 + op2;
+			break;
+		case SUB:
+			result = op1 - op2;
+			break;
+		case MUL:
+			result = op1 * op2;
+			break;
+		case DIV:
+			result = op1 / op2;
+			break;
+		case MOD:
+			result = op1 % op2;
+			break;
+		default:
+			printf("输入的命令有误，请重新输入......\n");
+			continue;
+		}
+
+		printf("result = %d\n", result);
+		system("pause");
 	}
-	printf("\n");
+	printf("Good Bye!!!\n");
+}
+
+/*
+typedef struct  Test_struct
+{
+	int a;
+	int b;
+	int c;
+}Test_struct;
+
+//枚举常量
+typedef enum Test_enum
+{
+	A,
+	B = 1,
+	C,
+	D,
+	E
+}Test_enum;
+
+//联合 公共体
+typedef union Test_union
+{
+	int a;
+	double b;
+	char c;
+}Test_union;
+
+void main()
+{
+	printf("Test_struct size = %d\n", sizeof(Test_struct));
+	printf("Test_union size = %d\n", sizeof(Test_union));
+
+}
+
+
+/*
+void main()
+{
+	Test_enum t = A;
+	printf("A = %d\n", A);
+	printf("B = %d\n", B);
+	printf("C = %d\n", C);
+
+	printf("size = %d\n", sizeof(Test_enum));
+}
+
+/*
+typedef struct Test
+{
+	int data[10000];
+	double d[1000];
+}Test;
+
+void fun1(Test t)
+{
+	t.data[0] = 0;
+}
+void fun2(Test *pt)
+{
+	pt->data[0] = 0;
+}
+
+void main()
+{
+	Test tt;
+
+	time_t begin = clock();
+	for(int i=0; i<100000; ++i)
+	{
+		fun1(tt);
+	}
+	time_t end = clock();
+	printf("time = %u\n", end - begin);
+
+	
+	time_t begin1 = clock();
+	for(int i=0; i<100000; ++i)
+	{
+		fun2(&tt);
+	}
+	time_t end1 = clock();
+	printf("time1 = %u\n", end1 - begin1);
+}
+
+/*
+typedef  struct Student 
+{
+	char name[10];
+	int age;
+	char sex[3];
+	float weight;
+}Student;
+
+void main()
+{
+	struct Student s;
+	//strcpy(s.name, "abc");
+	Student a;
+}
+
+/*
+typedef struct Date
+{
+	int year;
+	int month;
+	int day;
+}Date;
+
+typedef struct Time
+{
+	int hour;
+	int minute;
+	int second;
+}Time;
+
+typedef struct Test
+{
+	int a;
+	char ch;
+	float f[10];
+	double *pd;
+	Time te;
+}Test;
+
+void main()
+{
+	Test t;
+	t.a = 10;
+	
+	Test *pt = &t;
+	pt->a = 100;
+}
+
+/*
+typedef struct Date
+{
+	int year;
+	int month;
+	int day;
+}Date;
+
+typedef struct Time
+{
+	int hour;
+	int minute;
+	int second;
+}Time;
+
+typedef struct DateTime
+{
+	Date date;
+	Time time;
+}DateTime;
+
+void main()
+{
+	DateTime birthday = {{2000,4,4}, {21,9,30}};
+}
+
+/*
+typedef struct Student 
+{
+	char name[10];
+	int age;
+	char sex[3];
+	float weight;
+}Student;
+
+
+void main()
+{
+	Student s = {"比特", 10, "男", 98.5};
+
+	Student s1;
+	//s1.name = "放假啦";
+	strcpy(s1.name, "放假啦");
+	s1.age = 20;
+	strcpy(s1.sex,"女");
+	s1.weight = 12.34;
+}
+
+/*
+typedef struct Student 
+{
+	char name[10];
+	int age;
+	char sex[3];
+	float weight;
+}Student, *pStu;
+
+typedef unsigned long u_long;
+
+void main()
+{
+	Student s; //结构体变量
+	pStu ptr;
+	ptr = &s;
+}
+
+/*
+struct
+{
+	char name[10];
+	int age;
+	char sex[3];
+	float weight;
+}stu;
+
+void main()
+{
+	//struct Student s; //结构体变量
+}
+
+
+/*
+struct Student
+{
+	char name[10];
+	int age;
+	char sex[3];
+	float weight;
+}s1, s2;
+
+void main()
+{
+	struct Student s; //结构体变量
+}
+
+/*
+int fun(int a, int b)
+{
+	int value = a + b;
+	return value;
+}
+
+//argument count
+//argument value
+//命令行参数
+void main(int argc, char *argv[])
+{
+	//fun(1,2);
+}
+
+/*
+int fun(int a, int b)
+{
+	int value = a + b;
+	return value;
+}
+void main()
+{
+	int a = 10;
+	int b = 20;
+
+	int (*pFun)(int, int); //定义了一个指针
+	
+	pFun = &fun;                 //pFun = fun
+	int result = (*pFun)(a, b);  //pFun(a, b)
+	
+	printf("result = %d\n", result);
+}
+
+
+/*
+//函数名本身就充当了函数的入口地址
+int fun(int a, int b)
+{
+	int value = a + b;
+	return value;
+}
+
+int* fun1(int a, int b)
+{
+	static int res = a + b;
+	return &res;
+}
+
+void main()
+{
+	int a = 10;
+	int b = 20;
+
+	int (*pFun)(int, int); //定义了一个指针
+
+	pFun = fun;
+	int result = pFun(a, b);
+
+	printf("result = %d\n", result);
+
+	int *ptr = fun1(a, b);
+	printf("result = %d\n", *ptr);
+}
+
+/*
+int fun(int a, int b)
+{
+	int value = a + b;
+	return value;
+}
+
+void main()
+{
+	int a = 10;
+	int b = 20;
+
+	int (*pFun)(int, int); //定义了一个指针
+	pFun = &fun;
+
+	int result = (*pFun)(a, b);
+	
+	printf("result = %d\n", result);
 }
 
 /*
 void main()
 {
-	char str[10] = {'a','b','c'};
-	char str1[3] = "abc";
+	int ar[3] = {1,2,3};
+	int (*p)[3] = &ar;
+
+	int a = 1;
+	int b = 2;
+	int c = 3;
+
+	int *br[3] = {&a, &b, &c};
 }
 
 /*
-int dr[10];
-void  main()
+//a b 入参
+//*v  出参
+void fun(int *v, int a, int b)
 {
-	int ar[10];
-	int br[10] = {1,2,3,4,5,6,7,8,9,10};
-	int cr[10] = {1,2,3,4,5};
-	int er[10] = {1,2,3,4,5,6,7,8,9,10};
+	*v = a + b;
+}
+void main()
+{
+	int a = 10;
+	int b = 20;
 
-	int fr[] = {1,2,3,4,5,6,7,8,9,1,2,3,4};
-	int n = sizeof(fr) / sizeof(fr[0]);
+	int result;
+	fun(&result, a, b);
+	printf("result = %d\n", result);
 }
 
 /*
-#define N 10
+int fun(int a, int b)
+{
+	int value = a + b;
+	return value;
+}
 
 void main()
 {
-	int ar[10];
-	//printf("size = %d\n", sizeof(ar));
-	//const int n = 10;
-	//int br[n];
+	int a = 10;
+	int b = 20;
 
-	int cr[3+2];
-
-	int dr[N];
+	int result = fun(a, b);
+	printf("result = %d\n", result);
 }
 
+
 /*
+void Swap(int *a, int *b)
+{
+	int tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
 void main()
 {
-	//数组简化相同类型的变量定义；
-	int a[1000000];
+	int a = 10;
+	int b = 20;
+	printf("a = %d, b = %d\n", a, b);
+	Swap(&a, &b);
+	printf("a = %d, b = %d\n", a, b);
 }
 */
