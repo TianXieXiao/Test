@@ -1,311 +1,562 @@
 #include<stdio.h>
-#include<stdbool.h>
+#include<time.h>
 
-void fun(int a, int b)
-{
-	int value = a + b;
-	//return value;
-}
+//struct enum union
 
-void Swap(int *a, int *b)
+#pragma pack(2)
+union Un1
 {
-	int tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
+	char c[5];  //5+1
+	int i;      //4
+};
+
+union Un2
+{
+	short c[7];  //14
+	int i;       //4
+};
+
 void main()
 {
-	int a = 10;
-	int b = 20;
-	Swap(&a, &b);
+	printf("%d\n", sizeof(union Un1));
+	printf("%d\n", sizeof(union Un2));
 }
 
 /*
-void main()
+typedef union IP
 {
-	printf("bool size = %d\n", sizeof(bool**));
-	printf("char size = %d\n", sizeof(char**));
-	printf("short size = %d\n", sizeof(short*****));
-	printf("int size = %d\n", sizeof(int*));
-	printf("float size = %d\n", sizeof(float*));
-	printf("double size = %d\n", sizeof(double*));
-}
-
-/*
-void main()
-{
-	int a = 10;
-	int b = 20;
-
-	int *p = NULL;
-	int **s = NULL;
-
-	p = &a;
-	s = &p;
-
-	*p = 100;
-	*s = &b;
-}
-
-/*
-void main()
-{
-	int ar[10] = {1,2,3,4,5,6,7,8,9,10};
-	
-	for(int i=0; i<10; ++i)
-		printf("%d ", ar[i]);
-	printf("\n");
-
-	for(int i=0; i<10; ++i)
-		printf("%d ", *(ar+i));
-	printf("\n");
-
-	int *p = ar;
-	for(int i=0; i<10; ++i)
-		printf("%d ", *(p+i));
-	printf("\n");
-
-	for(int i=0; i<10; ++i)
-		printf("%d ", p[i]);
-	printf("\n");
-}
-
-/*
-void main()
-{
-	int ar[10] = {1,2,3,4,5,6,7,8,9,10};
-
-	printf("%p : %p\n", &ar[0], &ar[0]+1);
-	printf("%p : %p\n", ar, ar+1);
-	printf("%p : %p\n", &ar, &ar+1);
-
-	int *p1 = &ar[0];
-	int *p2 = ar;
-	int (*p3)[10] = &ar;  //数组指针
-
-	int br[3][5] = {0};
-	int (*p4)[5] = br;
-}
-
-/*
-#define N_VALUES 5
-void main()
-{
-	float values[N_VALUES];
-
-	float *vp;
-
-	for (vp = &values[N_VALUES]; vp > &values[0];)
+	struct
 	{
-		*--vp = 0;
-	}
+		unsigned char ip1;
+		unsigned char ip2;
+		unsigned char ip3;
+		unsigned char ip4;
+	};
+	unsigned long value;
+}IP;
+
+void Fun(unsigned long val)
+{
+	IP ip;
+	ip.value = val;
+	printf("%d.%d.%d.%d\n", ip.ip1,ip.ip2,ip.ip3,ip.ip4);
+}
+
+void main()
+{
+	unsigned long value = 46816414431; //IP  192.168.10.125
+	Fun(value);
 }
 
 /*
-int my_strlen(char *s)
+void main()
 {
-	char *p = s;
-	while (*p != '\0')
+	unsigned long value = 46816414431; //IP  192.168.10.125
+	time_t te;
+	time(&te);
+	printf("%u\n", te);
+	printf("%s\n", ctime(&te));
+}
+
+
+/*
+bool CheckModle()
+{
+	union
 	{
-		p++;
-	}
-	return p - s;
-}
+		int a;    //01 00 00 00
+		char ch;
+	}un;
 
-void main()
-{
-	char *str = "ABCXYZ";
-	int len = my_strlen(str);
-	printf("len = %d\n", len);
-}
-
-/*
-#define N_VALUES 5
-void main()
-{
-	float values[N_VALUES];
-
-	float *vp;
-
-	for (vp = &values[0]; vp < &values[N_VALUES];)
-	{
-		*vp++ = 0;
-	}
-}
-
-
-/*
-void main()
-{
-	int ar[10] = {1,2,3,4,5,6,7,8,9,10};
+	un.a = 1;
 	
-	for(int i=0; i<10; ++i)
-		printf("%d ", ar[i]);
-	printf("\n");
-
-	for(int i=0; i<10; ++i)
-		printf("%d ", *(ar+i));
-	printf("\n");
-
-	int *p = ar;
-	for(int i=0; i<10; ++i)
-		printf("%d ", *(p+i));
-	printf("\n");
-
-	for(int i=0; i<10; ++i)
-		printf("%d ", p[i]);
-	printf("\n");
+	return (un.ch == 1);
 }
 
-/*
 void main()
 {
-	int a = 0;
-
-	int *p = NULL; //
-	
-	*p = 100;
+	bool flag = CheckModle();
+	if(flag)
+		printf("小端.\n");
+	else
+		printf("大端.\n");
 }
 
 /*
+bool CheckModle()
+{
+	int a = 1;  //00 00 00 01
+	            //00 00 00 01  大端
+	            //01 00 00 00  小端
+	return (*(char*)&a == 1);
+}
+
 void main()
 {
-	int ar[10] = {1,2,3,4,5,6,7,8,9,10};
-
-	char *p1 = (char*)&ar[0];
-	char *p2 = (char*)&ar[10];
-
-	int n = p2 - p1;   //元素的个数
-	
+	bool flag = CheckModle();
+	if(flag)
+		printf("小端.\n");
+	else
+		printf("大端.\n");
 }
 
 /*
+union Un
+{
+	int i;
+	char c;
+};
+
+//00 00 00 00
+//55 33 22 11
 void main()
 {
-	int* ptr;
+	union Un un;
+	printf("%p\n", &(un.i));
+	printf("%p\n", &(un.c));
 
-	int *ptr;
+	un.i = 0x11223344;
+	un.c = 0x55;
+	printf("%x\n", un.i);
 }
-
 /*
+typedef union Test
+{
+	char a;    //1
+	double b;  //8
+	int c;     //4
+}Test;
+
 void  main()
 {
-	int a = 1;
+	printf("%d\n", sizeof(Test));
+	Test t;
+	t.c = 123456789;
 
-	//int *
-	//int 
-	int *p = &a;
+	printf("t.c = %d\n", t.c);
+	printf("t.a = %d\n", t.a);
+	printf("t.b = %f\n", t.b);
 
-	//int(*)[10]  //指针自身的类型
-	//int[10]     //指针指向的类型
-	int(*p)[10];
+
+}
+
+/*
+enum Day
+{
+	Mon,
+	Tues,
+	Wed,
+	Thur,
+	Fri,
+	Sat,
+	Sun
+};
+
+void main()
+{
+	printf("%d\n", Mon);
+	printf("%d\n", Tues);
+
+	printf("size = %d\n", sizeof(enum Day));   //4
+
+	enum Day t;
+	t = Mon;
+	//t = 0;
+}
+
+
+
+/*
+//空间换时间
+//1 自身类型有一个对齐值
+//2 自定义类型有一个对齐值(内部成员最大的一个)
+//3 程序有一个指定的对齐值(#pragma pack(n)  2^x)
+//4 程序有一个有效对齐值(较小值)
+
+//位域 1 不能跨字节存储
+//     2 不能跨类型存储
+
+typedef struct Test
+{
+	int data[1000];
+	double value;
+};
+
+void fun1(Test t_arg)
+{
+	//t_arg.
+}
+void fun2(Test *pt)
+{
+	//pt->
+}
+
+void main()
+{
+	Test t;
+	fun1(t);  //按值传递
+	fun2(&t); //按地址传递
+}
+
+/*
+struct S
+{
+	char a : 3;
+	char b : 4;
+	char c : 5;
+	char d : 4;
+};
+
+void main()
+{
+	struct S s = { 0 };
+	s.a = 10;
+	s.b = 12;
+	s.c = 3;
+	s.d = 4;
+}
+/*
+struct A
+{
+	int _a : 2;   //4  0000 0000 0000 000 0000000000 00000 00
+	                  //                      b             b    a
+	int _b : 20;
+
+	int _c : 20;
+	int _d : 5;
+};
+
+void main()
+{
+	printf("%d\n", sizeof(A));
+}
+
+/*
+typedef struct Test    //95%
+{
+	char a : 8; 
+	int  b : 4; 
+}Test;
+
+void main()
+{
+	printf("%d\n", sizeof(Test));
 }
 
 /*
 void main()
 {
-	int a = 123456789;
+	unsigned short (*pucCharArray)[10][10];
+	printf("%d\n", sizeof(pucCharArray)); //200
+}
 
-	char *pc = (char*)&a;
-	short *ps = (short*)&a;
-	int *pi = &a;
+/*
+typedef union unRec
+{
+	unsigned long ullndex;
+	unsigned short usLevel[7];
+	unsigned char ucPos;
+}REC_S;
 
-	printf("%p : %p : %d\n", pc, pc+1,*pc);
-	printf("%p : %p : %d\n", ps, ps+1,*ps);
-	printf("%p : %p : %d\n", pi, pi+1,*pi);
+REC_S stMax, *pstMax;
+
+sizeof(pucCharArray) = _________
+                  sizeof(stMax) = ___________
+                  sizeof(pstMax) = ____________
+				  sizeof(*pstMax) = ____________
+
+
+/*
+typedef struct Test    //95%
+{
+	char a : 1;  //1 + 3    1
+	int  b : 4;  //4        4
+}Test;
+
+void main()
+{
+	printf("%d\n", sizeof(Test));
+}
+
+
+/*
+typedef struct Test
+{
+	char a : 2;  //开关  0 1  位域  位段 节省空间
+	char b : 5;
+
+	char c : 2;
+}Test;
+
+void main()
+{
+	printf("%d\n", sizeof(Test));
+}
+
+/*
+typedef struct Test
+{
+	int a;
+	double d;
+	char c;
+}Test;
+
+void main()
+{
+	Test t;
+
+	printf("%d\n",(int)&(t.d) - (int)&(t.a));
 }
 
 /*
 void main()
 {
-	int a = 10;
-	int b = 20;
+	Test t;
+	printf("%p\n", &t);
 
-	const int *const p = &a;
+	Test *pt = &t;
 
-	
-	*p = 100;
-	p = &b;
+	printf("%p\n",&(t.a));
+	int *p = &(t.a);
 }
 
+/*
+#pragma pack(1)
+struct S1
+{
+	double c1;  //8
+	char i;     //1 + 3
+	int c2;     //4
+};
+
+struct S2
+{
+	char c1;   //1 +7
+	struct 
+	{
+		double c1;  //8
+		char i;     //1 + 3
+		int c2;     //4
+	};
+	double d;  //8
+};
 
 void main()
 {
-	int a = 100;
-	int *p = &a;
+	printf("%d\n", sizeof(struct S2)); 
+}
 
-	printf("a = %d\n", a);
-	printf("a = %d\n", *p);
+/*
+#pragma pack(4)
+typedef struct Test
+{
+	int a;      //4
+	struct tt
+	{
+		double b;  //8
+		char c[10];//10 +2
+		int d;     //4
+	};
+	long e;       //4   
+}Test;  
 
-	//a = 200;
-	*p = 200;
-	printf("a = %d\n", a);
-	printf("a = %d\n", *p);
+void main()
+{
+	Test t; //本质 开辟空间
+	printf("%d\n", sizeof(Test));  //32
+}
+
+/*
+#pragma pack(2)
+
+typedef struct Test
+{
+	short a;  //2
+	struct
+	{
+		int b[10];//40
+		double c; //8
+		char d;   //1 + 1
+	};
+	long e;  //4 
+}Test;  
+
+void main()
+{
+	printf("%d\n", sizeof(Test)); //56
+}
+
+/*
+typedef struct Test
+{
+	short a;  //2 + 6    
+	struct
+	{
+		int b;    //4 + 4
+		double c; //8
+		char d;   //1 + 7
+	};
+	long e;  //4 + 4 
+}Test;  
+
+void main()
+{
+	printf("%d\n", sizeof(Test)); //40
+}
+
+/*
+typedef struct Test
+{
+	short a;  //2 + 22        //2 + 2   //2 + 6
+	struct
+	{
+		int b;    //4 + 4
+		double c; //8
+		char d;   //1 + 7
+	};
+	long e;  //4 + 4          //4       //4 + 4
+}Test;  
+
+void main()
+{
+	printf("%d\n", sizeof(Test)); //32  72  56  40
+}
+
+/*
+typedef struct Test
+{
+	char a;   //1 + 7
+	double b; //8
+	int c;    //4 +4
+}Test;  
+
+void main()
+{
+	printf("%d\n", sizeof(Test));
+}
+
+
+/*
+#pragma pack(8)
+
+typedef struct Test
+{
+	char a;   //1 + 1
+	char b; //8
+	char c;    //4
+}Test;  
+
+void main()
+{
+	printf("%d\n", sizeof(Test));
+}
+
+/*
+typedef struct Test
+{
+	char a;   //1 + 1
+	double b; //8
+	int c;    //4
+}Test;  
+
+void main()
+{
+	printf("%d\n", sizeof(Test));
+}
+/*
+typedef struct Test
+{
+	char a;   //1 
+	short b;  //2 
+	int c;    //4
+}Test;  
+
+void main()
+{
+	printf("%d\n", sizeof(Test));
+}
+
+/*
+#pragma pack(4)
+typedef struct Test
+{
+	char a;   //1 + 1
+	short b;  //2 
+	int c;    //4
+}Test;  
+
+void main()
+{
+	printf("%d\n", sizeof(Test));
+}
+
+/*
+typedef struct Test
+{
+	char a;   //1 + 1
+	double b; //8
+	int c;    //4
+}Test;  
+
+void main()
+{
+	printf("%d\n", sizeof(Test));
+}
+
+/*
+typedef struct Test
+{
+	char a;   //1 + 3
+	int c;    //4
+	double b; //8
+}Test;  
+
+void main()
+{
+	printf("%d\n", sizeof(Test));
+}
+
+/*
+typedef struct Test
+{
+	char a;   //1 + 7
+	double b; //8
+	int c;    //4 + 4
+}Test;  
+
+void main()
+{
+	printf("%d\n", sizeof(Test));
+	Test t;
+	t.a = 'A';
+	t.b = 12.34;
+	t.c = 100;
 }
 
 /*
 void main()
 {
-	int a = 10;
-	int b = 20;
-
-	int *p = NULL;
-
-	p = &a;
-
-	*p = 100;
-
-	p = &b;
+	Test t;
+	printf("%d\n", sizeof(t));
+	printf("%d\n", sizeof(Test));
 }
 
 
 /*
 void main()
 {
-	printf("bool size = %d\n", sizeof(bool*));
-	printf("char size = %d\n", sizeof(char*));
-	printf("short size = %d\n", sizeof(short*));
-	printf("int size = %d\n", sizeof(int*));
-	printf("float size = %d\n", sizeof(float*));
-	printf("double size = %d\n", sizeof(double*));
+	Test t = {'A',12.34,100};
+	Test t_ar[3] = {{'A',12.34,100},{'A',12.34,100},{'A',12.34,100}};
 }
 
 /*
 void main()
 {
-	printf("bool size = %d\n", sizeof(bool));
-	printf("char size = %d\n", sizeof(char));
-	printf("short size = %d\n", sizeof(short));
-	printf("int size = %d\n", sizeof(int));
-	printf("float size = %d\n", sizeof(float));
-	printf("double size = %d\n", sizeof(double));
-}
+	Test t;
+	//赋值
+	t.a = 'A';
+	t.b = 12.34;
+	t.c = 100;
 
-/*
-void main()
-{
-	int a = 10;
-	int b = 20;
-
-	int *p = NULL;
-
-	p = &a;
-
-	*p = 100;
-
-	p = &b;
-}
-
-/*
-int main()
-{
-	char ch = 'A';
-	double d = 12.34;
-	int a = 10;  //定义了一个 整形变量
-
-	//什么类型的变量 = 什么类型的数据
-	int *p = &a; //整形指针 变量 = 指针 == 地址
-
-	return 0;
 }
 */
