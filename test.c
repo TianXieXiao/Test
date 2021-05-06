@@ -1,163 +1,218 @@
  #pragma warning(disable:4996) 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#define MAX_NAME_SIZE 20
-#define MAX_NUM_SIZE 5
-
-int main()
-{
-	char str[100] = { 0 };
-	gets(str);
-	int i = 0;
-	int count_a = 0;
-	int count_b = 0;
-	while (str[i] != 0)
-	{
-		if (str[i] == 'A')
-			count_a++;
-		else if (str[i] == 'B')
-			count_b++;
-		i++;
-	}
-	if (count_a>count_b)
-		printf("A\n");
-	else if (count_a<count_b)
-		printf("B\n");
-	else
-		printf("E\n");
-	return 0;
-}
-
-int main()
-{
-	int n = 0;
-	int score[40] = { 0 };
-	scanf("%d", &n);
-	int i = 0;
-	for (i = 0; i< n; i++)//while(n--!=0)为啥不通过？
-	{
-		scanf("%d ", &score[i]);
-	}
-
-	//对所有数字排序-冒泡排序
-	int j = 0;
-
-	for (i = 0; i < n; i++)
-	{
-		for (j = 0; j<n - i - 1; j++)
-		{
-			if (score[j]<score[j + 1])
-			{
-				int tmp = score[j];
-				score[j] = score[j + 1];
-				score[j + 1] = tmp;
-			}
-		}
-	}
-	for (i = 0; i < 5; i++)
-	{
-		printf("%d ", score[i]);
-	}
-	return 0;
-}
-
-int main()
-{
-	float price = 0.0;
-	int month = 0;
-	int day = 0;
-	int state = 0;
-	scanf("%f%d%d%d", &price, &month, &day, &state);
-	if (month == 11 && day == 11)
-	{
-		if (state == 1)
-			price = price*0.7 - 50;
-		else
-			price = price*0.7;
-	}
-	else if (month == 12 && day == 12)
-	{
-		if (state == 1)
-			price = price*0.8 - 50;
-		else
-			price = price*0.8;
-	}
-	if (price<0.0)
-		price = 0.0;
-	printf("%.2f\n", price);
-	return 0;
-}
-
-int main()
-{
-	int a = 0;
-	int b = 0;
-	scanf("%x %o\n", &a, &b);  //十六进制Hexadecimal一般以0x开头，例如0xFF。八进制Octal，一般以0开头，例如07。
-	int sum = a + b;            //进制之间的转换？
-	printf("%d\n", sum);
-	return 0;
-}
-
-int main()
-{
-	int i = 0;
-	int input = 0;
-	int sum = 0;
-	for (i = 0; i < 5; i++)
-	{
-		scanf("%d ", &input); //最后结束的时候也得按照格式输入
-		sum += input;
-	}
-	printf("%.1f\n", sum / 5.0);
-	return 0;
-}
-/*
-int main()
-{
-	typedef struct Student
-	{
-		char name[20];
-		char sex[10];
-		short age;
-	}Student;
-	Student a = { "Jack", "man", 18 };
-	char *b = (char*)malloc(sizeof(char)* 21);
-	memset(b, '-', sizeof(char)* 21);
-	printf("%s    %s    %s\n", "Name", "Age", "Gender");
-	printf("%s\n", b);
-	printf("%s    %d    %s\n", a.name, a.age, a.sex);
-	return 0;
-}
-/*
-int main()
-{
-	typedef struct Score
-	{
-		char name[MAX_NAME_SIZE];
-		float math;
-		float chinese;
-		float english;
-	}Score;
-	Score *p = (Score*)malloc(sizeof(Score)*MAX_NUM_SIZE);   //结构体数组赋值如何？
-	scanf("%f %f %f", &(p->math), &(p->chinese), &(p->english));
-	float sum = p->math + p->chinese + p->english;
-	float average = sum / 3;
-	printf("%.2f %.2f\n", sum, average);
-	return 0;
-}
-
-int main()
-{
-	int n = 0;
-	int h = 0;
-	int m = 0;
-	while (scanf("%d %d %d", &n, &h, &m) != EOF) //EOF的用法
-	{
-		if (m%h == 0)
-			printf("%d\n", n - m / h);
-		else
-			printf("%d\n", n - m / h - 1);
-	}
-	return 0;
-}*/
+//输入一个这整数，判断这个数中9的个数
+//int is_prime(int n)
+//{
+//	int count = 0;
+//	while (n)
+//	{
+//		if (n % 10 == 9)
+//			count++;
+//		n /= 10;
+//	}
+//	return count;
+//}
+//int main()
+//{
+//	int i = 0;
+//	scanf("%d", &i);
+//	printf("%d\n", is_prime(i));
+//	return 0;
+//}
+//找出10个整数中的最大值
+//方法一：利用ar[]开辟动态数组》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》1
+//int main()
+//{
+//	int i = 0;
+//	int ar[] = { 0 };
+//	while (ar[i] != '\n')
+//	{
+//		scanf("%d", &ar[i++]);
+//	}
+//	
+//	//while (ar[i++] != '\0')
+//	//{
+//	//	scanf("%d", ar[i]);
+//
+//	//}
+//	//scanf("%d", ar[i++]);
+//	printf("%d", i);
+//	return 0;
+//}
+//提前开好空间时间复杂度为O（1）
+//int main()
+//{	
+//	int ar[] = {-1,-2,-3,-4,-5,-6,-7,-8,-9,-23};
+//	int max = ar[0];
+//	for (int i = 1; i < 10; i++)
+//	{
+//		if (max < ar[i])
+//			max = ar[i];
+//	}
+//	printf("%d\n", max);
+//	return 0;
+//}
+//利用calloc()函数开辟动态数组空间求其中最大的整数
+//#include <stdlib.h>
+//int main()
+//{
+//	int i, n;
+//	int* pdata;
+//	printf("请问您准备存储多少个数据:");
+//	scanf("%d", &i);
+//	pdata = (int*)calloc(i, sizeof(int));
+//	printf("请输入：");
+//	for (n = 0; n < i; ++n)
+//	{
+//		scanf("%d", &pdata[n]);
+//	}
+//	printf("您已经存储了以下%d个数据: ", i);
+//	for (n = 0; n < i; ++n)
+//	{
+//		printf("%d ", pdata[n]);
+//	}
+//		printf("\n");
+//	int max = pdata[0];
+//	for (n = 1; n < i; n++)
+//	{
+//		if (max < pdata[n])
+//			max = pdata[n];
+//	}
+//	printf("您输入的数据中%d最大！\n", max);
+//	free(pdata);
+//	return 0;
+//}
+////请输入一个范围，并打印该范围内的素数以及个数
+//int is_prime(int b, int e)
+//{
+//	int i = 2;
+//	int count = 0;
+//	for (b; b <= e; b++)
+//	{
+//		if (b >5)
+//		{
+//			for (i; i < b / 2; i++,count)
+//			{
+//				if (b%i == 0)
+//				{
+//					break;
+//				}
+//				else
+//				{
+//					printf("%d", i);
+//				}
+//			}
+//		}
+//		
+//		else if (b=2)
+//		{
+//			printf("%d", b);
+//			count++;
+//		}
+//		else if (b>2&&b<=5)
+//		{
+//			for (i; i < b; i++,count++)
+//			{
+//				if (b%i == 0)
+//					break;
+//				printf("%d", i);
+//			}
+//		}
+//	}
+//	return count;
+//}
+//int main()
+//{
+//	int begin = 0;
+//	int end = 0;
+//	while (1)   //判断输入的区间是否在自然数中求质数的合理区间[2,n]内
+//	{
+//		scanf("%d%d", &begin, &end);     
+//		if (begin > end|| begin<=1)
+//		{
+//			printf("请输入正确的范围：");
+//		}
+//		else
+//		{
+//			break;
+//		}	
+//	}
+//	int a = 6;
+//	int b = 10;
+//	int c = is_prime(a, b);
+////	printf("该范围内的素数有%d",c );
+////	return 0;
+//	/*do
+//	{
+//		switch (juDge(begin, end))
+//		{
+//		case 0:
+//			scanf("%d-%d", &begin, &end);
+//			break;
+//		case 1:
+//			printf("请输入正确的范围~:");
+//
+//		default:
+//		}
+//	} while (begin > end);*/
+//	
+//}
+////
+//int main()
+//{
+//	int i, j;
+//	for (i = 100; i <= 200; ++i)
+//	{
+//		for (j = 2; j < i; ++j)
+//		{
+//			if (i%j == 0)
+//				break;
+//		
+//		}
+//		if (j==i)
+//		printf("%d", i);
+//	}
+//	return 0;
+//}
+//void  DivideInteger(int n)
+//{
+//	if (n > 9)
+//	{
+//		DivideInteger(n / 10);
+//	}
+//	printf("%d  ",n % 10);	
+//}
+//int main()
+//{
+//	int i = 0;
+//	scanf("%d", &i);
+//	printf("%d的每个数字分别是:",i);
+//	DivideInteger(i);
+//	return 0;
+//}
+//int Factorial(int n)
+//{
+//	if (n <= 1)
+//		return 1;
+//	else
+//		return n*Factorial(n - 1);
+//}
+//int main()
+//{
+//	int n = 0;
+//	scanf("%d", &n);
+//	printf("%d的阶乘为：%d\n", n,Factorial(n));
+//	return 0;
+//}
+//int main()
+//{
+//	int i = 0;
+//	int ret = 1;
+//	scanf("%d", &i);
+//	for (int n = 1; n <= i; ++n)
+//	{
+//		ret *= n;
+//	}
+//	printf("%d的阶乘为：%d", i, ret);
+//	return 0;
+//}
