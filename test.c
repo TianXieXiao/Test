@@ -1,163 +1,99 @@
- #pragma warning(disable:4996) 
+ #pragma warning(disable:4996)
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#define MAX_NAME_SIZE 20
-#define MAX_NUM_SIZE 5
 
+//题目5
+//KiKi参加了语文、数学、外语的考试，请帮他判断三科中的最高分。
+//从键盘任意输入三个整数表示的分数，编程判断其中的最高分。
+//1. 多组输入
+//2. 每组输入接受3个数字，求出最大值，因为成绩不能是负数，所以假设max期初是0.
 int main()
 {
-	char str[100] = { 0 };
-	gets(str);
+	int score[3] = { 0 };
 	int i = 0;
-	int count_a = 0;
-	int count_b = 0;
-	while (str[i] != 0)
+	while (scanf("%d %d %d", &score[0], &score[1], &score[2]) != EOF)
 	{
-		if (str[i] == 'A')
-			count_a++;
-		else if (str[i] == 'B')
-			count_b++;
-		i++;
-	}
-	if (count_a>count_b)
-		printf("A\n");
-	else if (count_a<count_b)
-		printf("B\n");
-	else
-		printf("E\n");
-	return 0;
-}
-
-int main()
-{
-	int n = 0;
-	int score[40] = { 0 };
-	scanf("%d", &n);
-	int i = 0;
-	for (i = 0; i< n; i++)//while(n--!=0)为啥不通过？
-	{
-		scanf("%d ", &score[i]);
-	}
-
-	//对所有数字排序-冒泡排序
-	int j = 0;
-
-	for (i = 0; i < n; i++)
-	{
-		for (j = 0; j<n - i - 1; j++)
+		int max_score = 0;
+		for (i = 0; i < 3; i++)
 		{
-			if (score[j]<score[j + 1])
+			if (score[i]>max_score)
 			{
-				int tmp = score[j];
-				score[j] = score[j + 1];
-				score[j + 1] = tmp;
+				max_score = score[i];
 			}
 		}
-	}
-	for (i = 0; i < 5; i++)
-	{
-		printf("%d ", score[i]);
+		printf("%d\n", max_score);
 	}
 	return 0;
 }
 
+//题目4
+//KiKi想知道一个整数的奇偶性，请帮他判断。
+//从键盘任意输入一个整数（范围-231~231-1），编程判断它的奇偶性。
 int main()
 {
-	float price = 0.0;
-	int month = 0;
-	int day = 0;
-	int state = 0;
-	scanf("%f%d%d%d", &price, &month, &day, &state);
-	if (month == 11 && day == 11)
+	int num = 0;
+	while (scanf("%d", &num) != EOF)
 	{
-		if (state == 1)
-			price = price*0.7 - 50;
+		if (num % 2 == 0)
+		{
+			printf("Even\n");
+		}
 		else
-			price = price*0.7;
+		{
+			printf("Odd\n");
+		}
 	}
-	else if (month == 12 && day == 12)
+	return 0;
+}
+
+//题目3
+//KiKi想知道他的考试分数是否通过，请帮他判断。从键盘任意输入一个整数表示的分数，编程判断该分数是否在及格范围内，如果及格
+//，即：分数大于等于60分，是输出“Pass”，否则，输出“Fail”。
+int main()
+{
+	int score = 0;
+	while (scanf("%d", &score) != EOF)
 	{
-		if (state == 1)
-			price = price*0.8 - 50;
+		if (score >= 60)          //如果省略花括号，OJ将不能通过
+		{
+			printf("Pass\n");
+		}
 		else
-			price = price*0.8;
+		{
+			printf("Fail\n");
+		}
 	}
-	if (price<0.0)
-		price = 0.0;
-	printf("%.2f\n", price);
 	return 0;
 }
 
+//题目2
+//KiKi想知道他的考试成绩是否完美，请帮他判断。
+//从键盘输入一个整数表示的成绩，编程判断成绩是否在90~100之间，
+//如果是则输出“Perfect”。
+
+//1. 多组输入。
+//2. 数学中的90<=score<=100 的写法，在C语言中直接写是有bug的。
 int main()
 {
-	int a = 0;
-	int b = 0;
-	scanf("%x %o\n", &a, &b);  //十六进制Hexadecimal一般以0x开头，例如0xFF。八进制Octal，一般以0开头，例如07。
-	int sum = a + b;            //进制之间的转换？
-	printf("%d\n", sum);
+	int n = 0;
+	while (scanf("%d", &n) != EOF)
+	{
+		if (90 <= n&&n <= 100)
+			printf("Perfect");
+	}
 	return 0;
 }
 
-int main()
-{
-	int i = 0;
-	int input = 0;
-	int sum = 0;
-	for (i = 0; i < 5; i++)
-	{
-		scanf("%d ", &input); //最后结束的时候也得按照格式输入
-		sum += input;
-	}
-	printf("%.1f\n", sum / 5.0);
-	return 0;
-}
-/*
-int main()
-{
-	typedef struct Student
-	{
-		char name[20];
-		char sex[10];
-		short age;
-	}Student;
-	Student a = { "Jack", "man", 18 };
-	char *b = (char*)malloc(sizeof(char)* 21);
-	memset(b, '-', sizeof(char)* 21);
-	printf("%s    %s    %s\n", "Name", "Age", "Gender");
-	printf("%s\n", b);
-	printf("%s    %d    %s\n", a.name, a.age, a.sex);
-	return 0;
-}
-/*
-int main()
-{
-	typedef struct Score
-	{
-		char name[MAX_NAME_SIZE];
-		float math;
-		float chinese;
-		float english;
-	}Score;
-	Score *p = (Score*)malloc(sizeof(Score)*MAX_NUM_SIZE);   //结构体数组赋值如何？
-	scanf("%f %f %f", &(p->math), &(p->chinese), &(p->english));
-	float sum = p->math + p->chinese + p->english;
-	float average = sum / 3;
-	printf("%.2f %.2f\n", sum, average);
-	return 0;
-}
+//题目1
+//据说智商140以上者称为天才，KiKi想知道他自己是不是天才，请帮他编程判断。输入一个整数表示一个人的智商，
+//如果大于等于140，则表明他是一个天才，输出“Genius”。
 
 int main()
 {
 	int n = 0;
-	int h = 0;
-	int m = 0;
-	while (scanf("%d %d %d", &n, &h, &m) != EOF) //EOF的用法
+	while (scanf("%d", &n) != EOF)//这种写法是因为scanf读取失败返回EOF,EOF是-1，所以按位取反后的结果是0,0为假，可以让循环停止。
 	{
-		if (m%h == 0)
-			printf("%d\n", n - m / h);
-		else
-			printf("%d\n", n - m / h - 1);
+		if (n >= 140)
+			printf("Genius");
 	}
 	return 0;
-}*/
+}
