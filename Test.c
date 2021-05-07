@@ -1,301 +1,603 @@
-#include<stdio.h> //预处理命令  标准输入输出头文件
+
+#include<stdio.h>
 #include<stdbool.h>
 
-void main()
+int main()
 {
-	int ar[10]; //未初始化
-	//printf("size = %d\n", sizeof(ar));
-	int br[10] = {1,2,3,4,5,6,7,8,9,10}; //完全初始化
-	int cr[10] = {1,2,3,4};//未完全初始化
-	
-	int dr[] = {1,2,3,4,5};
-	int n = sizeof(dr) / sizeof(ar[0]);
+	int i = 0;
+	int k = 0;
+	for (i = 0, k = 0; k = 0; i++, k++)
+	{
+		printf("fjlajfaflajl\n");
+		k++;
+	}
+	return 0;
 }
 
+
+
 /*
-//
 void main()
 {
-	int array[10] = {1,2,3,4,5,6,7,8,9,10}; //
-	for(int i=0; i<10; ++i)
+	int i = 0;
+	//-128 ~ 127
+	for(char ch=0; ch<128; ++ch)
 	{
-		printf("%d ", array[i]);
+		printf("i = %d\n",i++);
 	}
 }
 
 /*
-int Max(int a, int b)
+void main()
 {
-	int max_value;
-	if(a > b)
+	for(int i=1; i<=10; ++i)
 	{
-		max_value = a;
+		if(i == 5)
+		{
+			//break; //跳出整个循环
+			continue;//跳出本次循环
+		}
+		printf("i = %d\n", i);
+	}
+
+}
+
+/*
+void main()
+{
+	int i = 1;
+	while(i < 1)
+	{
+		printf("i = %d\n", i);
+		++i;
+	}
+}
+
+/*
+void main()
+{
+	int i = 1;
+	do
+	{
+		printf("i = %d\n", i);
+		++i;
+	}while(i < 1);
+}
+
+/*
+void main()
+{
+	int i = 1;
+	while(i <= 10)
+	{
+		printf("i = %d\n", i);
+		++i;
+	}
+}
+
+/*
+int main()
+{
+	int n = 1;
+	int m = 2;
+	switch (n)
+	{
+	case 1:
+		m++;
+	case 2:
+		n++;
+	case 3:
+		switch (n)
+		{//switch允许嵌套使用
+		case 1:
+			n++;
+		case 2:
+			m++;
+			n++;
+			break;
+		}
+	case 4:
+		m++;
+		break;
+	default:
+		break;
+	}
+	printf("m = %d, n = %d\n", m, n);
+	return 0;
+}
+
+/*
+void main()
+{
+	int year, month;
+	printf("Plase input year and month:>");
+	scanf("%d %d", &year, &month);
+
+	int days;
+
+	switch(month)
+	{
+	case 1:
+	case 3:
+	case 5:
+	case 7:
+	case 8:
+	case 10:
+	case 12:
+		days = 31;
+		break;
+	case 2:
+		if((year%4==0&&year%100!=0) || (year%400==0))
+			days = 29;
+		else
+			days = 28;
+		break;
+	case 4:
+	case 6:
+	case 9:
+	case 11:
+		days = 30;
+		break;
+	
+	default:
+		printf("月份有误，程序结束.\n");
+		return;
+	}
+	printf("%d 年的 %d 月 有 %d 天.\n", year, month, days);
+}
+
+/*
+void main()
+{
+	float f = 12.3;
+	int a=1, b=2;
+
+	char ch = 'A';
+
+	//整形  整形表达式
+	switch(ch)
+	{
+	default:
+		break;
+	case 'A':
+		break;
+	}
+}
+
+/*
+void main()
+{
+	int year, month;
+	printf("Plase input year and month:>");
+	scanf("%d %d", &year, &month);
+
+	int days;
+
+	switch(month)
+	{
+	case 1:
+	case 3:
+	case 5:
+	case 7:
+	case 8:
+	case 10:
+	case 12:
+		days = 31;
+		break;
+	case 2:
+		if((year%4==0&&year%100!=0) || (year%400==0))
+			days = 29;
+		else
+			days = 28;
+		break;
+	case 4:
+	case 6:
+	case 9:
+	case 11:
+		days = 30;
+		break;
+	default:
+		printf("月份有误，程序结束.\n");
+		return;
+	}
+	printf("%d 年的 %d 月 有 %d 天.\n", year, month, days);
+}
+
+/*
+void main()
+{
+	int year, month;
+	printf("Plase input year and month:>");
+	scanf("%d %d", &year, &month);
+
+	int days;
+
+	switch(month)
+	{
+	case 1:
+		days = 31;
+		break;
+	case 2:
+		if((year%4==0&&year%100!=0) || (year%400==0))
+			days = 29;
+		else
+			days = 28;
+		break;
+	case 3:
+		days = 31;
+		break;
+	case 4:
+		days = 30;
+		break;
+	case 5:
+		days = 31;
+		break;
+	case 6:
+		days = 30;
+		break;
+	case 7:
+		days = 31;
+		break;
+	case 8:
+		days = 31;
+		break;
+	case 9:
+		days = 30;
+		break;
+	case 10:
+		days = 31;
+		break;
+	case 11:
+		days = 30;
+		break;
+	case 12:
+		days = 31;
+		break;
+	default:
+		printf("月份有误，程序结束.\n");
+		return;
+	}
+	printf("%d 年的 %d 月 有 %d 天.\n", year, month, days);
+}
+
+/*
+void main()
+{
+	int year, month;
+	printf("Plase input year and month:>");
+	scanf("%d %d", &year, &month);
+
+	if(month<=0 || month>12)
+	{
+		printf("月份有误，程序结束.\n");
+		return;
+	}
+
+	int days;
+
+	if(month==1 || month==3 || month==5 || month==7
+	   || month==8 || month==10 || month==12)
+		days = 31;
+	else if(month == 2)
+	{
+		if((year%4==0&&year%100!=0) || (year%400==0))
+			days = 29;
+		else
+			days = 28;
+	}
+	else 
+		days = 30;
+
+	printf("%d 年的 %d 月 有 %d 天.\n", year, month, days);
+}
+
+
+/*
+int main()
+{
+	int a = 1;
+	int b = 2;
+	if (a == 1)
+	{
+		if (b == 2)
+		{
+			printf("hehe\n");
+		}	
+		else
+		{
+			printf("haha\n");
+		}
+	}
+	return 0;
+}
+
+/*
+int main()
+{
+	int a = 1;
+	int b = 2;
+	if (a == 1)
+	{
+		if (b == 2)
+			printf("hehe\n");
 	}
 	else
 	{
-		max_value = b;
+		printf("haha\n");
 	}
-	return max_value;
+	return 0;
 }
+
+/*
+// 1 2 3 4 5 6 7 8 9 10 11 12
+
+void main()
+{
+	int year, month;
+	printf("Plase input year and month:>");
+	scanf("%d %d", &year, &month);
+
+	if(month<=0 || month>12)
+	{
+		printf("月份有误，程序结束.\n");
+		return;
+	}
+
+	if(month==1 || month==3 || month==5 || month==7
+	   || month==8 || month==10 || month==12)
+		printf("31");
+	else if(month == 2)
+	{
+		if((year%4==0&&year%100!=0) || (year%400==0))
+			printf("29");
+		else
+			printf("28");
+	}
+	else 
+		printf("30");
+}
+
+/*
+void main()
+{
+	int year, month;
+	printf("Plase input year and month:>");
+	scanf("%d %d", &year, &month);
+
+	if(month == 1)
+		printf("31");
+	else if(month == 2)
+	{
+		if((year%4==0&&year%100!=0) || (year%400==0))
+			printf("29");
+		else
+			printf("28");
+	}
+	else if(month == 3)
+		printf("31");
+	else if(month == 4)
+		printf("30");
+	else if(month == 5)
+		printf("31");
+	else if(month == 6)
+		printf("30");
+	else if(month == 7)
+		printf("31");
+	else if(month == 8)
+		printf("31");
+	else if(month == 9)
+		printf("30");
+	else if(month == 10)
+		printf("31");
+	else if(month == 11)
+		printf("30");
+	else if(month == 12)
+		printf("31");
+}
+
+/*
+void main()
+{
+	int a = 10;
+	
+	if(a == 10)
+	{
+		printf("A.\n");
+	}
+	else if(a == 20)
+	{
+		printf("B.\n");
+	}
+	else if(a != 0)
+	{
+		printf("OK.\n");
+	}
+	else
+	{
+		printf("Error.\n");
+	}
+}
+
+/*
+struct Student
+{
+	char name[10];
+	int age;
+	char sex[3];
+};
+
+void main()
+{
+	struct Student s1 = {"比特", 10, "男"};
+	printf("%s %d %s\n", s1.name, s1.age, s1.sex);
+}
+
+
+/*
+void  main()
+{
+	printf("bool = %d\n", sizeof(bool*));
+	printf("short = %d\n", sizeof(short*));
+	printf("int = %d\n", sizeof(int*));
+	printf("long = %d\n", sizeof(long*));
+	printf("float = %d\n", sizeof(float*));
+	printf("double = %d\n", sizeof(double*));
+	printf("long long = %d\n", sizeof(long long*));
+}
+
+/*
+void main()
+{
+	int a = 100;
+
+	int *p = &a;  //
+	
+	printf("p size = %d\n", sizeof(p));
+
+	printf("a = %d\n", a);
+	printf("a = %d\n", *p);
+	printf("&a = %p\n",&a);
+}
+
+/*#include"fun.h"
+
+extern int global;
 
 void main()
 {
 	int a = 10;
 	int b = 20;
+	int max_value = Max(a, b);
+	printf("max value = %d\n", max_value);
 
-	int result = Max(a, b);
-	
-	printf("max value = %d\n", result);
-
+	printf("global = %d\n", global);
 }
 
 /*
+int fun()
+{
+	static int i = 0;
+	i++;
+	return i;
+}
+
 void main()
 {
-	int count = 1;
-	//for(初始化; 循环条件 ; 更改条件)
-	for(int i=0;  i<100; i++)
-	{
-		printf("count = %d\n", count);
-		count = count + 1;
-	}
-}
-
-/*
-void main()
-{
-	int count = 1;
-	do
-	{
-		printf("count = %d\n", count);
-		count = count + 1;
-	}while(count <= 100);
-}
-
-/*
-void main()
-{
-	int count = 1;
-	while(count <= 100)
-	{
-		printf("count = %d\n", count);
-		//count = count + 1;
-		//count += 1;
-		//count++; //后++
-		++count; //前++
-	}
-}
-
-/*
-void main()
-{
-	int select;
-	printf("Please input select:>");
-	scanf("%d", &select); //取地址
-	if(select >= 60)
-	{
-		printf("优秀\n");
-	}
-	else
-	{
-		printf("不及格.\n");
-	}
-}
-
-/*
-void main()
-{
-	printf("Hello C.\n"); //\n换行  转义字符
-	printf("C:\\Bit\\Code\\2021_rocket\\C\\Test3_31_初识C语言\n");
-	printf("Hello \"body\"\n");
-	printf("Hello \'body\'\n");
-	printf("abc\txyz\thjk\tlmn\n"); //tab
-}
-
-/*
-void main()
-{
-	/*
-	printf("Hello C.\n"); //\n换行  转义字符 续行符
-	hello cpp
-	jflajfajflajfljalfjafjafjkajflkajflknvnvlkanlkanl
-	
-}
-
-/*
-void main()
-{
-	printf("Hello C.\n"); //\n换行  转义字符
-	printf("C:\\Bit\\Code\\2021_rocket\\C\\Test3_31_初识C语言\n");
-	printf("Hello \"body\"\n");
-	printf("Hello \'body\'\n");
-	printf("abc\txyz\thjk\tlmn\n"); //tab
-}
-
-/*
-int main()
-{
-	char arr1[] = "bit";
-	char arr2[] = { 'b', 'i', 't' };
-	char arr3[] = { 'b', 'i', 't', '\0' };
-
-	printf("%s\n", arr1); //bit
-	printf("%s\n", arr2); //bit随机数
-	printf("%s\n", arr3); //bit
-	return 0;
-}
-
-/*
-void main()
-{
-	char ar[] = "abcxyz";
-	printf("strlen = %d\n", strlen(ar));
-	printf("sizeof = %d\n", sizeof(ar));
+	int ret = fun();
+	printf("ret = %d\n", ret);
+	ret = fun();
+	printf("ret = %d\n", ret);
+	ret = fun();
+	printf("ret = %d\n", ret);
 }
 
 /*
 //宏定义
-#define SIZE 10
+#define U_LONG unsigned long
+typedef unsigned long u_long;
 
 void main()
 {
-	10;
-	const int a = 10; //常量 只读变量
-	enum {A=1,B=2};
+	unsigned long val;
+	U_LONG data;
+	u_long dat;
+
+	//char short int float double
+	size_t type;
 }
 
 /*
-int global = 2019;//全局变量
-
-//ctrl + k + c
-//ctrl + k + u
-//ctrl + fn + f5
-void fun()
+int Max(int a, int b)
 {
-	int num1 = 100;
-	printf("num1 = %d\n", num1);
-	printf("global = %d\n", global);
+	return a > b ? a : b;
 }
-
-
-int main()
-{
-	//alt+f8
-	printf("global = %d\n", global);
-	fun();
-	//printf("num1 = %d\n", num1);
-
-	return 0;
-}
-
-/*
-//作用域 
-int global = 2019;//全局变量
-
-int main()
-{
-	int local = 2018;//局部变量
-	int global = 2020;//局部变量
-	printf("global = %d\n", global);
-	return 0;
-}
-
-/*
-int b; //静态常量区
 
 void main()
 {
-	int a;  //栈区
+	int ret = (10, 20, 30, 40);
+	printf("ret = %d\n", ret);
+	printf("max value = %d\n", Max(10,20));
 }
 
+
 /*
-//全局变量
-int global = 0;
+int Max(int a, int b)
+{
+	if(a > b)
+		return a;
+	return b;
+}
 
 void main()
 {
-	//局部变量
-	char ch = 'A'; //初始化
+	printf("max value = %d\n", Max(10,20));
+}
+
+/*
+void main()
+{
+	int i = 0;
+
+	printf("%d %d %d %d\n", i++, ++i, i++, ++i);
+	     //0   2  2  4
+	     //0   1  1  2
+
+	printf("i = %d\n", i);
+	     //4
+}
+
+
+/*
+//逻辑运算符 && || ！
+void main()
+{
+	int a = 0;
+	int b = 1;
+	int ret = a && ++b; //短路求值
+
+	printf("ret = %d\n", ret); //1
+	printf("b = %d\n", b);     //1
+}
+
+/*
+//位运算
+void main()
+{
+	int a = 10;   //0000 1010
+	int b = 10;   //0001 0110
+
+	//int ret = a & b;  
+	//int ret = a | b; 
+	//int ret = a ^ b;
+
+	// 0000 0000 0000 0000 0000 0000 0000 1010
+	// 1111 1111 1111 1111 1111 1111 1111 0101
+	// 1111 1111 1111 1111 1111 1111 1111 0100
+	// 1000 0000 0000 0000 0000 0000 0000 1011
+
+	int ret = ~a;
+	printf("ret = %d\n", ret);
+}
+
+/*
+//>>右移  <<左移
+void main()
+{
+	// 0110 0100
 	int a = 100;
-	double d = 12.34;
+	//int ret = a >> 2;   //a / 2^2
+	int ret = a << 2;     //a * 2^2
+
+	printf("ret = %d\n", ret);
 }
 
 /*
 void main()
 {
-	//变量
-	int a = 10;  // = 赋值
-	printf("a = %d\n", a);
-	a = 20;
-	printf("a = %d\n", a);
-}
+	int a = 10;
+	int b = 3;
 
-/*
-int main()
-{
-	//定义变量 开辟空间
-	bool flag = false; //true 1   false 0  
-	char ch = 'A';  //字符  "字符串"
-	short s = 10; //短整形
-	int i = 100;   //
-	long b = 1000;  //长整形
-	long long long_b = 2000;
-	float f = 12.34f; //单精度浮点类型
-	double d = 23.45; //双精度浮点类型
-	return 0;
-}
-
-
-/*
-void main()
-{
-	printf("bool = %d\n", sizeof(bool));
-	printf("char = %d\n", sizeof(char));
-	printf("short = %d\n", sizeof(short));
-	printf("int = %d\n", sizeof(int));
-	printf("long = %d\n", sizeof(long));
-	printf("long long = %d\n", sizeof(long long));
-	printf("float = %d\n", sizeof(float));
-	printf("double = %d\n", sizeof(double));
-}
-
-/*
-int main()
-{
-	//定义变量 开辟空间
-	bool flag;   
-	char ch;  //字符
-	short s; //短整形
-	int i;   //
-	long b;  //长整形
-	long long long_b;
-	float f; //单精度浮点类型
-	double d; //双精度浮点类型
-	return 0;
-}
-
-/*
-int main()
-{
-	printf("Hello C.\n");
-	return 0; //0正确  -1错误
-}
-
-/*
-//主函数  一个
-void main()
-{
-	//打印函数
-	printf("Hello C.\n");
-}
-
-
-/*
-#include<stdio.h>
-
-int main()
-{
-	printf("Hello C.\n");
-	return 0;
+	int ret = a / b;  //整除
+	
 }
 */
