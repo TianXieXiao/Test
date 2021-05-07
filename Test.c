@@ -1,406 +1,301 @@
-#include<stdio.h>
-#include<string.h>
-#include<time.h>
+#include<stdio.h> //预处理命令  标准输入输出头文件
 #include<stdbool.h>
 
-unsigned long long Fib(int n)
-{
-	if(n <= 2)
-		return 1;
-
-	unsigned long long fib, fib1=1, fib2=1;
-	for(int i=3; i<=n; ++i)
-	{
-		fib = fib1 + fib2;
-		fib1 = fib2;
-		fib2 = fib;
-	}
-	return fib;
-}
-
 void main()
 {
-	int n;
-	while(1)
-	{
-		printf("input n:>");
-		scanf("%d", &n);
-		if(n == -1)
-			break;
-
-		size_t result = Fib(n);
-		printf("第%d项的斐波那契值 = %ul\n", n, result);
-	}
+	int ar[10]; //未初始化
+	//printf("size = %d\n", sizeof(ar));
+	int br[10] = {1,2,3,4,5,6,7,8,9,10}; //完全初始化
+	int cr[10] = {1,2,3,4};//未完全初始化
+	
+	int dr[] = {1,2,3,4,5};
+	int n = sizeof(dr) / sizeof(ar[0]);
 }
 
 /*
-unsigned long long Fib(int n)
-{
-	if(n <= 2)
-		return 1;
-	else
-		return Fib(n-1) + Fib(n-2);
-}
-
+//
 void main()
 {
-	int n;
-	while(1)
+	int array[10] = {1,2,3,4,5,6,7,8,9,10}; //
+	for(int i=0; i<10; ++i)
 	{
-		printf("input n:>");
-		scanf("%d", &n);
-		if(n == -1)
-			break;
-
-		size_t result = Fib(n);
-		printf("第%d项的斐波那契值 = %d\n", n, result);
+		printf("%d ", array[i]);
 	}
-}
-
-/*
-void print(int n)
-{
-	if (n > 9)
-	{
-		print(n / 10);  //123  12 1
-	}
-	printf("%d ", n % 10);
-}
-
-int main()
-{
-	int num = 1234;
-	print(num); //1 2 3 4
-	return 0;
-}
-
-
-
-/*
-//n! = 1*2*3*.....*n
-//OJ 迭代  循环
-//递归
-
-size_t Fact(int n)
-{
-	size_t ret = 1;
-	for(int i=1; i<=n; ++i)
-	{
-		ret *= i;
-	}
-	return ret;
-}
-
-void main()
-{
-	int n;
-	while(1)
-	{
-		printf("input n:>");
-		scanf("%d", &n);
-		if(n == -1)
-			break;
-
-		size_t result = Fact(n);
-		printf("%d! = %d\n", n, result);
-	}
-}
-
-
-/*
-size_t Fact(int n)
-{
-	if(n == 1)
-		return 1;
-	else
-		return n*Fact(n-1);
-}
-
-void main()
-{
-	int n;
-	while(1)
-	{
-		printf("input n:>");
-		scanf("%d", &n);
-		if(n == -1)
-			break;
-
-		size_t result = Fact(n);
-		printf("%d! = %d\n", n, result);
-	}
-}
-
-/*
-size_t Fact(int n)
-{
-	size_t ret = 1;
-	for(int i=1; i<=n; ++i)
-	{
-		ret *= i;
-	}
-	return ret;
-}
-
-void main()
-{
-	int n;
-	while(1)
-	{
-		printf("input n:>");
-		scanf("%d", &n);
-		if(n == -1)
-			break;
-
-		size_t result = Fact(n);
-		printf("%d! = %d\n", n, result);
-	}
-}
-
-/*
-#include"Max.h" 
-#include"Min.h"
-
-void main()
-{
-	int a = 1;
-	int b = 2;
-	int result = Max(a, b);
-	printf("max value = %d\n", result);
-	result = Min(a, b);
-	printf("min value = %d\n", result);
-}
-
-/*
-int Max(int a, int b);
-void fun();
-
-void main()
-{
-	int a = 1;
-	int b = 2;
-	int result = Max(a, b);
-	printf("result = %d\n", result);
-	fun();
-}
-
-void fun()
-{
-	printf("aaaaaaaaaaa\n");
-	Max(1,2);
-}
-
-int Max(int a, int b)
-{
-	fun();
-	return a > b ? a : b;
-}
-
-
-
-
-/*
-void main()
-{
-	char str[20] = "HelloC++";
-	int len = strlen(str);  //字符串有效长度
-	printf("len = %d\n", len);
-
-	char str1[20] = "Hello ";
-	char str2[] = "C++";
-	printf("str1 = %s\n", str1);
-	strcat(str1, str2);  //字符串的链接
-	printf("str1 = %s\n", str1);
-
-	char str3[20] = "Hello ";
-	char str4[] = "C++";
-	printf("str3 = %s\n", str3);
-	strcpy(str3, str4);  //字符串的拷贝
-	printf("str3 = %s\n", str3);
-
-	char str5[] = "Hello falfj";
-	char str6[] = "Hello";
-	int ret = strcmp(str5, str6); //字符串的比较
-	printf("ret = %d\n", ret);
 }
 
 /*
 int Max(int a, int b)
 {
-	return a > b ? a : b;
+	int max_value;
+	if(a > b)
+	{
+		max_value = a;
+	}
+	else
+	{
+		max_value = b;
+	}
+	return max_value;
 }
 
 void main()
 {
 	int a = 10;
-	int b = 30;
-	int c = 20;
-	int result = Max( Max(a, b), c );
-	printf("result = %d\n", result);
+	int b = 20;
+
+	int result = Max(a, b);
+	
+	printf("max value = %d\n", result);
 
 }
 
 /*
+void main()
+{
+	int count = 1;
+	//for(初始化; 循环条件 ; 更改条件)
+	for(int i=0;  i<100; i++)
+	{
+		printf("count = %d\n", count);
+		count = count + 1;
+	}
+}
+
+/*
+void main()
+{
+	int count = 1;
+	do
+	{
+		printf("count = %d\n", count);
+		count = count + 1;
+	}while(count <= 100);
+}
+
+/*
+void main()
+{
+	int count = 1;
+	while(count <= 100)
+	{
+		printf("count = %d\n", count);
+		//count = count + 1;
+		//count += 1;
+		//count++; //后++
+		++count; //前++
+	}
+}
+
+/*
+void main()
+{
+	int select;
+	printf("Please input select:>");
+	scanf("%d", &select); //取地址
+	if(select >= 60)
+	{
+		printf("优秀\n");
+	}
+	else
+	{
+		printf("不及格.\n");
+	}
+}
+
+/*
+void main()
+{
+	printf("Hello C.\n"); //\n换行  转义字符
+	printf("C:\\Bit\\Code\\2021_rocket\\C\\Test3_31_初识C语言\n");
+	printf("Hello \"body\"\n");
+	printf("Hello \'body\'\n");
+	printf("abc\txyz\thjk\tlmn\n"); //tab
+}
+
+/*
+void main()
+{
+	/*
+	printf("Hello C.\n"); //\n换行  转义字符 续行符
+	hello cpp
+	jflajfajflajfljalfjafjafjkajflkajflknvnvlkanlkanl
+	
+}
+
+/*
+void main()
+{
+	printf("Hello C.\n"); //\n换行  转义字符
+	printf("C:\\Bit\\Code\\2021_rocket\\C\\Test3_31_初识C语言\n");
+	printf("Hello \"body\"\n");
+	printf("Hello \'body\'\n");
+	printf("abc\txyz\thjk\tlmn\n"); //tab
+}
+
+/*
+int main()
+{
+	char arr1[] = "bit";
+	char arr2[] = { 'b', 'i', 't' };
+	char arr3[] = { 'b', 'i', 't', '\0' };
+
+	printf("%s\n", arr1); //bit
+	printf("%s\n", arr2); //bit随机数
+	printf("%s\n", arr3); //bit
+	return 0;
+}
+
+/*
+void main()
+{
+	char ar[] = "abcxyz";
+	printf("strlen = %d\n", strlen(ar));
+	printf("sizeof = %d\n", sizeof(ar));
+}
+
+/*
+//宏定义
+#define SIZE 10
+
+void main()
+{
+	10;
+	const int a = 10; //常量 只读变量
+	enum {A=1,B=2};
+}
+
+/*
+int global = 2019;//全局变量
+
+//ctrl + k + c
+//ctrl + k + u
+//ctrl + fn + f5
 void fun()
 {
-	printf("This is fun().\n");
-}
-
-void PrintFun(int n)
-{
-	for(int i=0; i<n; ++i)
-	{
-		fun();
-	}
-}
-void main()
-{
-	int n;
-	printf("input n:>");
-	scanf("%d", &n);
-
-	PrintFun(n);
+	int num1 = 100;
+	printf("num1 = %d\n", num1);
+	printf("global = %d\n", global);
 }
 
 
-/*
-//效率不高  改进
-bool IsPrime(int value)
+int main()
 {
-	for(int i=2; i<value/2; ++i)
-	{
-		if(value % i == 0)
-			return false;
-	}
-	return true;
-}
+	//alt+f8
+	printf("global = %d\n", global);
+	fun();
+	//printf("num1 = %d\n", num1);
 
-bool IsLeap(int year)
-{
-	return (((year % 4 == 0) && (year % 100 != 0)) || (year % 400==0));
-}
-
-
-int Increment()
-{
-	static int num = 0;
-	num +=1;
-	return num;
-}
-
-void main()
-{
-	int num = Increment();  //num = num + 1;
-	printf("num = %d\n", num);
-
-	num = Increment(num);  //num = num + 1;
-	printf("num = %d\n", num);
-
-	num = Increment(num);  //num = num + 1;
-	printf("num = %d\n", num);
+	return 0;
 }
 
 /*
-void main()
+//作用域 
+int global = 2019;//全局变量
+
+int main()
 {
-	int num = 0;
-	num = Increment(num);  //num = num + 1;
-	printf("num = %d\n", num);
-
-	num = Increment(num);  //num = num + 1;
-	printf("num = %d\n", num);
-
-	num = Increment(num);  //num = num + 1;
-	printf("num = %d\n", num);
+	int local = 2018;//局部变量
+	int global = 2020;//局部变量
+	printf("global = %d\n", global);
+	return 0;
 }
 
 /*
+int b; //静态常量区
+
 void main()
 {
-	int value;
-	while(1)
-	{
-		printf("Please input a number[以-1结束]:>");
-		scanf("%d", &value);
-		if(value == -1)
-			break;
-
-		//bool flag = IsPrime(value);
-		int flag = IsLeap(value);
-
-		if(flag == 0) 
-			printf("OK.\n");
-		else
-			printf("NO.\n");
-	}
+	int a;  //栈区
 }
 
 /*
-//返回值  函数名  (参数列表)  {函数体}
-int Sum(int a, int b)
-{
-	int result = a + b;
-	return result;
-}
-int Max(int a, int b)
-{
-	return a > b ? a : b;   //选择结构
-}
+//全局变量
+int global = 0;
 
-void Swap(int x, int y)
+void main()
 {
-	int tmp = x;
-	x = y;
-	y = tmp;
-}
-void  main()
-{
+	//局部变量
+	char ch = 'A'; //初始化
 	int a = 100;
-	int b = 20;
-	int result = Sum(a, b);
-	printf("result = %d\n", result);
-	int max_value = Max(a, b);
-	printf("max value = %d\n", max_value);
-	//交换两数
-	printf("before: a = %d, b = %d\n", a, b);
-	Swap(a, b);
-	printf("after: a = %d, b = %d\n", a, b);
-}
-
-/*
-void Swap(int *a, int *b)
-{
-	int tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
-void  main()
-{
-	int a = 100;
-	int b = 20;
-	int result = Sum(a, b);
-	printf("result = %d\n", result);
-	int max_value = Max(a, b);
-	printf("max value = %d\n", max_value);
-	//交换两数
-	printf("before: a = %d, b = %d\n", a, b);
-	Swap(&a, &b);
-	printf("after: a = %d, b = %d\n", a, b);
+	double d = 12.34;
 }
 
 /*
 void main()
 {
-	time_t te;
-	time(&te);
-	printf("%s\n", ctime(&te));
+	//变量
+	int a = 10;  // = 赋值
+	printf("a = %d\n", a);
+	a = 20;
+	printf("a = %d\n", a);
 }
+
+/*
+int main()
+{
+	//定义变量 开辟空间
+	bool flag = false; //true 1   false 0  
+	char ch = 'A';  //字符  "字符串"
+	short s = 10; //短整形
+	int i = 100;   //
+	long b = 1000;  //长整形
+	long long long_b = 2000;
+	float f = 12.34f; //单精度浮点类型
+	double d = 23.45; //双精度浮点类型
+	return 0;
+}
+
 
 /*
 void main()
 {
-	char *str = "Hellohflkakfl";  //字符串
-	int len = strlen(str);
-	printf("str length = %d\n", len);
+	printf("bool = %d\n", sizeof(bool));
+	printf("char = %d\n", sizeof(char));
+	printf("short = %d\n", sizeof(short));
+	printf("int = %d\n", sizeof(int));
+	printf("long = %d\n", sizeof(long));
+	printf("long long = %d\n", sizeof(long long));
+	printf("float = %d\n", sizeof(float));
+	printf("double = %d\n", sizeof(double));
+}
+
+/*
+int main()
+{
+	//定义变量 开辟空间
+	bool flag;   
+	char ch;  //字符
+	short s; //短整形
+	int i;   //
+	long b;  //长整形
+	long long long_b;
+	float f; //单精度浮点类型
+	double d; //双精度浮点类型
+	return 0;
+}
+
+/*
+int main()
+{
+	printf("Hello C.\n");
+	return 0; //0正确  -1错误
+}
+
+/*
+//主函数  一个
+void main()
+{
+	//打印函数
+	printf("Hello C.\n");
+}
+
+
+/*
+#include<stdio.h>
+
+int main()
+{
+	printf("Hello C.\n");
+	return 0;
 }
 */
