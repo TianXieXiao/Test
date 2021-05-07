@@ -1,389 +1,395 @@
+ #pragma warning(disable:4996)
 #include <stdio.h>
-#include <string.h>
-#include <math.h>
-#include <stdlib.h>
-#include <time.h>
-#include <windows.h>
-
-//预处理符号
-#define MAX 100
-
-/*#ifndef XXX
-#define XXX
-#endif*/
-
-#pragma warning(disable:4996)
-
-
-int MyMax(int x, int y)
+/*
+//题目13
+//KiKi想获得某年某月有多少天，
+//请帮他编程实现。输入年份和月份，计算这一年这个月有多少天。
+int main()
 {
-	if (x > y){
-		return x;
-	}
-
-	return y;
-	//else if (x < y){
-	//	return y;
-	//}
-	//else{
-	//	return x;
-	//}
-}
-
-//return 0: no
-//retunr 1: yes
-int is_prime_number(int n)
-{
-	int i = 2;
-	//2..n-1
-	//100
-	//4 * 25
-	//25 * 4
-	//10 * 10
-	for (; i <= (int)sqrt(n); ++i){ //2,3,4,5,6,7,8,9, n = x * y
-		if (n % i == 0){
-			return 0;
+	int year = 0;
+	int month = 0;
+	while (scanf("%d %d", &year, &month) != EOF)
+	{
+		if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+		{
+			if (month == 2)
+			{
+				printf("%d\n", 29);
+			}
+			else if (month == 4 || month == 6 || month == 9 || month == 11)
+			{
+				printf("%d\n", 30);
+			}
+			else
+			{
+				printf("%d\n", 31);
+			}
+		}
+		else
+		{
+			if (month == 2)
+			{
+				printf("%d\n", 28);
+			}
+			else if (month == 4 || month == 6 || month == 9 || month == 11)
+			{
+				printf("%d\n", 30);
+			}
+			else
+			{
+				printf("%d\n", 31);
+			}
 		}
 	}
-	return 1;
-}
-
-void Menu()
-{
-	printf("########################\n");
-	printf("## 1. Guess   0. Exit ##\n");
-	printf("########################\n");
-	printf("Please Select# ");
-}
-
-void Game()
-{
-	int n = 0;
-	int count = 0;
-	int data = rand() % 100 + 1;
-	do{
-		count++;
-		printf("Please Guess# ");
-		scanf("%d", &n);
-		if (n < data){
-			printf("你猜的小了!\n");
-		}
-		else if (n > data){
-			printf("你猜大了!\n");
-		}
-		else{
-			printf("恭喜你，猜对了，数据是 %d, 花了 %d 次机会 \n", n,count);
-			break;
-		}
-	} while (1);
-
+	return 0;
 }
 int main()
 {
-	int quit = 0;
-	srand((unsigned long)time(NULL));
-	while (!quit){
-		Menu();
-		int select = 0;
-		scanf("%d", &select);
-		switch (select){
-		case 1:
-			Game();
-			break;
-		case 0:
-			quit = 1;
-			break;
-		default:
-			printf("select error!\n");
-			break;
+	int y = 0;
+	int m = 0;
+	int days[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+	while (scanf("%d%d", &y, &m) != EOF)
+	{
+		int day = days[m - 1];
+		if ((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0))
+		{
+			if (m == 2)
+				day += 1;
 		}
-		printf("恭喜你完成，要不要再搞一把!\n");
+		printf("%d\n", day);
 	}
-	printf("byebye!\n");
-
-
-	//二分查找：必须是有序的数据序列！！
-	//编写代码在一个整形有序数组中查找具体的某个数
-	// 1,2,3,4,5,6,7,8,9,10
-	//x
-	//int arr[] = {1,2,3,4,5,6,7,8,9,11,22,33,44,55,66,77};
-	//int num = sizeof(arr) / sizeof(arr[0]);
-	//int n = 22;
-
-	//int start = 0;
-	//int end = num - 1;
-	//while (start <= end){
-	//	int mid = (start + end) / 2; //bug?
-	//	if (n < arr[mid]){
-	//		end = mid-1;
-	//	}
-	//	else if (n > arr[mid]){
-	//		start = mid + 1;
-	//	}
-	//	else{
-	//		printf("found it!, index:%d\n", mid);
-	//		break;
-	//	}
-	//}
-
-
-	// 1*1=1
-	// 2*1=2 2*2=4
-	//...... 
-	//int i = 1;
-	////第几层
-	//for (; i <= 9; i++){
-	//	//输出几列
-	//	int j = 1;
-	//	for (;j <= i;j++){
-	//		printf("%d*%d=%-2d ", i, j, i*j);
-	//	}
-	//	printf("\n");
-	//}
-	//int arr[] = { 3, 34, 34, 45, 3, 45, 56, 645, 234, 23, 45, 345, 34, 234, 234, 9090 };
-	//int num = sizeof(arr) / sizeof(arr[0]);
-
-	//int i = 1;
-	//int max = arr[0];
-	//for (; i < num; i++){
-	//	if (max < arr[i]){
-	//		max = arr[i];
-	//	}
-	//}
-
-	//printf("max = %d\n", max);
-
-	//计算1/1-1/2+1/3-1/4+1/5 …… + 1/99 - 1/100 的值，打印出结果
-	//double result = 0.0;
-
-	//int i = 1;
-	//int flag = 1;
-	//for (; i <= 100; i++){
-	//	result += (flag * 1.0) / i;
-	//	flag = -flag;
-	//}
-	//printf("%lf\n", result);
-
-	//编写程序数一下 1到 100 的所有整数中出现多少个数字9
-	//int n = 1;
-	//int count = 0;
-	//for (; n <= 100; n++){
-	//	if (n % 10 == 9){
-	//		count++;
-	//	}
-	//	int m = n / 10;
-	//	if (m % 10 == 9){
-	//		count++;
-	//	}
-	//}
-	//printf("%d\n", count);
-
-	//写一个代码：打印100~200之间的素数
-	//int i = 100;
-	//for (; i <= 200; i++){
-	//	if (is_prime_number(i)){
-	//		printf("%d ", i);
-	//	}
-	//}
-	//printf("\n");
-
-	//打印1000年到2000年之间的闰年
-	//int year = 1000;
-	//for (; year <= 2000; year++){
-	//	if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0){
-	//		printf("%d ", year);
-	//	}
-	//}
-	//给定两个数，求这两个数的最大公约数
-	//	例如：
-	//	输入：20 40
-	//	输出：20
-	// x, y n*x(T+T+T..+T)+m*y(T+T..+T) % T == 0
-	// x / y = v ... w
-	//x = v*y + w ==> w = 1 * x  + (-v) * y;
-	// w =  x % y : 余数，也一定能够整除两个数组的最大公约数
-	//x > y
-	//x = x % y, x 变得小了，x < y
-	//y =  y % x
-	//int x = 75;
-	//int y = 100;
-	//int z = 0;
-
-	//while (x*y !=0){
-	//	if (x > y){
-	//		x %= y;
-	//	}
-	//	else if (x < y){
-	//		y %= x;
-	//	}
-	//	else{
-	//		break;
-	//	}
-	//}
-	//printf("%d\n", x == 0 ? y : x);
-
-	//if (x < y){
-	//	int temp = x;
-	//	x = y;
-	//	y = temp;
-	//}
-
-	//while (z = x % y){
-	//	x = y;
-	//	y = z;
-	//}
-
-	//printf("%d\n", y);
-
-
-
-
-	//int a = 0, b = 0;
-	//for (a = 1, b = 1; a <= 100; a++)
-	//{
-	//	if (b >= 20) break;
-	//	if (b % 3 == 1)
-	//	{
-	//		b = b + 3; //1,4,7,10,13,16,19,22
-	//		continue;
-	//	}
-	//	b = b - 5;
-	//}
-	//printf("%d\n", a);
-	//int i = 0;
-	//while (printf("."),i < 3){
-	//	printf("%d \n", i);
-	//	i++;
-	//}
-	//int x = 3;
-	//int y = 3;
-	//switch (x % 2) { //1
-	//case 1:
-	//	switch (y)
-	//	{
-	//	case 0:
-	//		printf("first");
-	//	case 1:
-	//		printf("second");
-	//		break;
-	//	default: printf("hello");
-	//	}
-	//case 2:
-	//	printf("third");
-	//}
-	//int a = 1;
-	//int b = 0;
-	//switch (a)
-	//{
-	//case 1: b = 30;
-	//case 2: b = 20;
-	//case 3: b = 16;
-	//default: b = 0;
-	//}
-	//printf("%d\n", b);
-
-
-	//写代码将三个整数数按从大到小输出。
-	//int a = 0;
-	//int b = 0;
-	//int c = 0;
-
-	//scanf("%d %d %d", &a, &b, &c);
-
-	//if (a < b){
-	//	int temp = a;
-	//	a = b;
-	//	b = temp;
-	//}
-	////a b c
-	//if (a < c){
-	//	int temp = a;
-	//	a = c;
-	//	c = temp;
-	//}
-
-	////a一定是最大的！！
-	////a bc
-	//if (b < c){
-	//	int temp = b;
-	//	b = c;
-	//	c = temp;
-	//}
-
-	//printf("%d %d %d\n", a, b, c);
-
-	//写一个代码打印1 - 100之间所有3的倍数的数字
-	//int i = 1;
-	//for (; i <= 100; ++i){
-	//	if (!(i % 3)){
-	//		printf("%d ", i);
-	//	}
-	//}
-	//printf("\n");
-	//int i = 0;
-	//for (i = 0; i<10; i++,printf("%d ", i))
-	//{
-	//	//1. 现将（）内的表达式（组合），运行完毕
-	//	//2. 在判定运行结果是否为真/假
-	//	if (5 = i ) //0假，非0真
-	//		printf("%d ", i);
-	//	Sleep(1000);
-	//}
-	//int a = 10;
-
-	//int *p = NULL;
-
-
-	//printf("%d\n", sizeof(char*));
-	//printf("%d\n", sizeof(int*));	
-	//printf("%d\n", sizeof(double*));	
-
-	//int arr[10] = { 0 };
-	//char ch[] = "hello bitfffff";
-	//int x = 0;
-	//int y = 0;
-	//printf("Please Enter Data<x, y># ");
-	//scanf("%d %d", &x, &y);
-
-	//int z = MyMax(x, y);
-	//printf("max = %d\n", z);
-
-
-
-	//1*8^2 + 2 * 8 + 1 = 64 + 16 + 1 = 81
-	//6*16+5 = 96+5 = 101
-	//printf("%s", "c:\test\x65"); //\八进制 \x十六进制：表示的都是一个字符
-	//printf("%d\n", strlen("c:\test\121"));
-	//printf("%d\n", ' ');
-	//char arr[] = { 'b', 'i', 't' };
-	//printf("%d\n", strlen(arr));
-
-	system("pause");
 	return 0;
 }
 
-//#include <stdio.h>
-//#include <windows.h>
-//
-////int num = 10;
-//
-//int main()
-//{
-//	int num = 1; //临时变量，局部变量，自动变量
-//
-//	int i = 10;
-//	while (i > 0){
-//		int x = 100;//临时变量，局部变量，自动变量
-//		printf("%d\n", i);
-//		i--;
-//	}
-//	printf("x = %d\n", x);
-//
-//	printf("num = %d\n", num);
-//
-//
-//
-//
-//	system("pause");
-//	return 0;
-//}
+//题目12
+//从键盘输入a, b, c的值，编程计算并输出一元二次方程ax2 + bx + c = 0的根，当a = 0时，输出“Not
+//quadratic equation”，当a ≠ 0时，根据△ = b2 - 4ac的三种情况计算并输出方程的根。
+#include <math.h>
+int main()
+{
+	float a = 0.0;
+	float b = 0.0;
+	float c = 0.0;
+	float state = 0.0;
+	while (scanf("%f %f %f", &a, &b, &c) != EOF)
+	{
+		if (a != 0)
+		{
+			state = b*b - 4 * a*c;
+			if (state > 0.0)
+			{
+				printf("x1=%.2f;x2=%.2f\n", (-b - sqrt(state)) / (2 * a),
+					(-b + sqrt(state)) / (2 * a));
+			}
+			else if (state < 0.0)
+			{
+				printf("x1=%.2f-%.2fi;x2=%.2f+%.2fi\n",
+					(-b) / (2 * a), sqrt(-state) / (2 * a),
+					(-b) / (2 * a), sqrt(-state) / (2 * a)); //虚部的写法
+			}
+			else
+			{
+				printf("x1=x2=%.2f\n", (-b) / (2 * a));
+			}
+		}
+		else
+		{
+			printf("Not quadratic equation\n");
+		}
+	}
+	return 0;
+}
+
+//题目11
+//在计算BMI（BodyMassIndex ，身体质量指数）的案例基础上，判断人体胖瘦程度。
+//BMI中国标准如下表所示。
+int main()
+{
+	float height = 0;//不能写成int 后面在进行(float)weight转换精度，会出现丢失
+	float weight = 0;
+	float bmi = 0.0;
+	while (scanf("%f %f", &weight, &height) != EOF)
+	{
+		bmi = weight / (height * height / 10000);
+		if (bmi < 18.5)
+			printf("Underweight\n");
+		else if (bmi >= 18.5 && bmi <= 23.9)
+			printf("Normal\n");
+		else if (bmi > 23.9 && bmi <= 27.9)
+			printf("Overweight\n");
+		else
+			printf("Obese\n");
+	}
+	return 0;
+}
+
+//题目10
+//KiKi想知道已经给出的三条边a，b，c能否构成三角形，如果能构成三角形，判断三角形的类型（等边
+//三角形、等腰三角形或普通三角形）。
+int main()
+{
+	int a = 0;
+	int b = 0;
+	int c = 0;
+	while (scanf("%d %d %d", &a, &b, &c) != EOF)
+	{
+		//满足条件就是三角形
+		if (a + b>c && b + c>a && c + a>b)
+		{
+			if (a == b && b == c)
+				printf("Equilateral triangle!\n");
+			else if ((a == b &&a != c) || (a == c && a != b) || (b == c &&b != a))
+				printf("Isosceles triangle!\n");
+			else
+				printf("Ordinary triangle!\n");
+		}
+		else
+			printf("Not a triangle!\n");
+	}
+	return 0;
+}
+*/
+//为啥会出现内存占用溢出？
+int main()
+{
+	int a = 0;
+	int b = 0;
+	int c = 0;
+	while (scanf("&d &d &d", &a, &b, &c) != EOF)
+	{
+		if (a + b > c && b + c > a && c + a > b)
+		{
+			if (a == b && b == c)
+				printf("Equilateral triangle!\n");
+			else if ((a == b && a != c) || (a == c && a != b) || (b == c && b != a))
+				printf("Isosceles triangle!\n");
+			else
+				printf("Ordinary triangle!\n");
+		}
+		else
+			printf("Not a triangle!\n");
+	}
+	return 0;
+}
+
+/*
+//题目9
+//KiKi最近学习了信号与系统课程，这门课里有一个非常有趣的函数，
+//单位阶跃函数，其中一种定义方式为：
+//现在试求单位冲激函数在时域t上的值。
+int main()
+{
+	int t = 0;
+	while (scanf("%d", &t) != EOF)
+	{
+		if (t > 0)
+		{
+			printf("1\n");
+		}
+		else if (t == 0)
+		{
+			printf("0.5\n");
+		}
+		else
+		{
+			printf("0\n");
+		}
+	}
+	return 0;
+}
+int main()
+{
+	int t = 0;
+	while (scanf("%d", &t) != EOF)
+	{
+		if (t>0)
+			printf("%d\n", 1);
+		else if (t == 0)
+			printf("%.1f\n", 0.5f);
+		else
+			printf("%d\n", 0);
+	}
+	return 0;
+}
+
+//题目8
+//KiKi想完成字母大小写转换，有一个字符，
+//判断它是否为大写字母，如果是，将它转换成小写字母；反之则转换为大写字母。
+int main()
+{
+	char num = 0;
+	while (scanf(" %c", &num) != EOF)
+	{
+		if (num >= 'a'&&num <= 'z')
+		{
+			num = num - '\0' - 32;//'\0'==0,'0'==48,
+			printf("%c\n", num);
+
+		}
+		else if (num >= 'A'&&num <= 'Z')
+		{
+			num = num - '\0' + 32;
+			printf("%c\n", num);
+		}
+	}
+	return 0;
+}
+int main()
+{
+	int ch = 0;
+	//多组输入
+	while ((ch = getchar()) != EOF)
+	{
+		if (islower(ch))
+		{
+			printf("%c\n", toupper(ch));
+		}
+		else
+		{
+			printf("%c\n", tolower(ch));
+		}
+		//处理'\n'
+		getchar();
+	}
+	return 0;
+}
+
+//题目7
+//KiKi想判断输入的字符是不是字母，请帮他编程实现。
+int main()
+{
+	char num = 0;
+	while (scanf(" %c", &num) != EOF)//ch=getchar()) != EOF 出while循环getchar();//去除每个字符后的\n
+	{//scanf("%c\n")//在%c的后边发给一个'\n'，其实在输入时候就会消化掉这个\n字符
+		//不会为下次留下空白字符的隐患
+		if (('a' <= num&&num <= 'z') || ('A' <= num&&num <= 'Z'))//isalpha(ch)
+		{
+			printf("%c is an alphabet.\n", num);
+		}
+		else
+			printf("%c is not an alphabet.\n", num);
+	}
+	return 0;
+}
+
+//题目6
+//KiKi开始学习英文字母，BoBo老师告诉他，有五个字母A(a), E(e), I(i), O(o),U(u)称为元音，其他所有字母称为辅音，
+//请帮他编写程序判断输入的字母是元音（Vowel）还是辅音（Consonant）。
+int main()
+{
+	char num[11] = "AaEeIiOoUu";
+	int i = 0;
+	char n = 0;
+	while (scanf(" %c", &n) != EOF)////在%c的前面写一个空格会消化掉前面所有的空白字符，然后读取一个字符
+	{
+		for (i = 0; i<10; i++)
+		{
+			if (n == num[i])
+			{
+				printf("Vowel\n");
+				break;
+			}
+		}
+		if (i == 10)
+			printf("Consonant\n");
+	}
+	return 0;
+}
+
+//题目5
+//KiKi参加了语文、数学、外语的考试，请帮他判断三科中的最高分。
+//从键盘任意输入三个整数表示的分数，编程判断其中的最高分。
+//1. 多组输入
+//2. 每组输入接受3个数字，求出最大值，因为成绩不能是负数，所以假设max期初是0.
+int main()
+{
+	int score[3] = { 0 };
+	int i = 0;
+	while (scanf("%d %d %d", &score[0], &score[1], &score[2]) != EOF)
+	{
+		int max_score = 0;
+		for (i = 0; i < 3; i++)
+		{
+			if (score[i]>max_score)
+			{
+				max_score = score[i];
+			}
+		}
+		printf("%d\n", max_score);
+	}
+	return 0;
+}
+
+//题目4
+//KiKi想知道一个整数的奇偶性，请帮他判断。
+//从键盘任意输入一个整数（范围-231~231-1），编程判断它的奇偶性。
+int main()
+{
+	int num = 0;
+	while (scanf("%d", &num) != EOF)
+	{
+		if (num % 2 == 0)
+		{
+			printf("Even\n");
+		}
+		else
+		{
+			printf("Odd\n");
+		}
+	}
+	return 0;
+}
+
+//题目3
+//KiKi想知道他的考试分数是否通过，请帮他判断。从键盘任意输入一个整数表示的分数，编程判断该分数是否在及格范围内，如果及格
+//，即：分数大于等于60分，是输出“Pass”，否则，输出“Fail”。
+int main()
+{
+	int score = 0;
+	while (scanf("%d", &score) != EOF)
+	{
+		if (score >= 60)          //如果省略花括号，OJ将不能通过
+		{
+			printf("Pass\n");
+		}
+		else
+		{
+			printf("Fail\n");
+		}
+	}
+	return 0;
+}
+
+//题目2
+//KiKi想知道他的考试成绩是否完美，请帮他判断。
+//从键盘输入一个整数表示的成绩，编程判断成绩是否在90~100之间，
+//如果是则输出“Perfect”。
+
+//1. 多组输入。
+//2. 数学中的90<=score<=100 的写法，在C语言中直接写是有bug的。
+int main()
+{
+	int n = 0;
+	while (scanf("%d", &n) != EOF)
+	{
+		if (90 <= n&&n <= 100)
+			printf("Perfect");
+	}
+	return 0;
+}
+
+//题目1
+//据说智商140以上者称为天才，KiKi想知道他自己是不是天才，请帮他编程判断。输入一个整数表示一个人的智商，
+//如果大于等于140，则表明他是一个天才，输出“Genius”。
+
+int main()
+{
+	int n = 0;
+	while (scanf("%d", &n) != EOF)//这种写法是因为scanf读取失败返回EOF,EOF是-1，所以按位取反后的结果是0,0为假，可以让循环停止。
+	{
+		if (n >= 140)
+			printf("Genius");
+	}
+	return 0;
+}
+*/
