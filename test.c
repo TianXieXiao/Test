@@ -1,272 +1,316 @@
+ #pragma warning(disable:4996) 
 #include <stdio.h>
-#include <windows.h>
-
-void SwapData(int arr[], int num)
+#include <assert.h>
+#include <stdlib.h>
+//题目5
+//数组形式的整数加法
+int *Array_Integer(int A[], int Asize, int k, int *returnsize)
 {
-	//1,2,3,4,5,6,7,8,9
-	int start = 0;
-	int end = num - 1;
-	while (start < end){
-		while (start < end && (arr[start] & 1 )){
-			start++;
-		}
-		while (start < end && !(arr[end] & 1) ){
-			end--;
-		}
-		if (start < end){
-			arr[start] ^= arr[end];
-			arr[end] ^= arr[start];
-			arr[start] ^= arr[end];
-			start++, end--;
-		}
+	assert(A != NULL && returnsize != NULL);
+	int p_size = log10(k) + 1;
+	int size = Asize > p_size ? Asize + 1 : p_size + 1;
+	int *ret =(int*)calloc(size, sizeof(int));//不需要强制类型转换吗？
+	//表示加完之后的总的个数
+	assert(ret != NULL);
+	int total = 0;
+	//用数组中的每一位加K
+	int retIdx = size - 1;
+	while (Asize > 0)  //Asize没有改变吧？
+	{
+		k += A[--Asize];
+		ret[retIdx--] = k % 10;
+		k /= 10;
+		total++;
 	}
-}
-
-#define SIZE 10
-void ShowYang()
-{
-	int yang[SIZE][SIZE] = {0};
-	int i = 0;
-	for (; i < SIZE; i++){
-		int j = 0;
-		for (; j < SIZE; j++){
-			if (j == 0 || j == i){
-				yang[i][j] = 1;
-			}
-			//if (j == 0){
-			//	yang[i][j] = 1;
-			//}
-			//if (i == j){
-			//	yang[i][j] = 1;
-			//}
-
-		}
+	while (k > 0)
+	{
+		ret[retIdx--] = k % 10;
+		k /= 10;
+		total++;
 	}
-	
-	for (i = 2; i < SIZE; i++){
-		int j = 1;
-		for (; j < i ; j++){
-			yang[i][j] = yang[i - 1][j] + yang[i - 1][j - 1];
-		}
+	if (total < size)
+	{
+		memmove(ret, ret + size - total, sizeof(int)*total);
 	}
-
-	//For test
-	for (i = 0; i < SIZE; i++){
-		int j = SIZE - i;
-		for (; j > 0; j--){
-			printf(" ");
-		}
-		for (j=0; j <= i; j++){
-			printf("%2d", yang[i][j]);
-		}
-		printf("\n");
-	}
-}
-char FindKiller()
-{
-	//题目名称:
-	//	猜凶手
-	//	题目内容 :
-	//	日本某地发生了一件谋杀案，
-	//	警察通过排查确定杀人凶手必为4个嫌疑犯的一个。
-	//	以下为4个嫌疑犯的供词 :
-	//	    A说：不是我。
-	//		B说：是C。
-	//		C说：是D。
-	//		D说：C在胡说
-	//		已知3个人说了真话，1个人说的是假话。
-	//		现在请根据这些信息，写一个程序来确定到底谁是凶手。
-	char killer = 'A';
-	for (; killer <= 'D'; killer++){
-		if (((killer != 'A') + \
-			(killer == 'C') + \
-			(killer == 'D') + \
-			(killer != 'D')) == 3){
-			return killer;
-		}
-	}
-}
-void ShowRank()
-{
-	//题目名称:
-	//	猜名次
-	//	题目内容 :
-	//	5位运动员参加了10米台跳水比赛，有人让他们预测比赛结果：
-	//		A选手说：B第二，我第三；
-	//		B选手说：我第二，E第四；
-	//		C选手说：我第一，D第二；
-	//		D选手说：C最后，我第三；
-	//		E选手说：我第四，A第一；
-	//		比赛结束后，每位选手都说对了一半，请编程确定比赛的名次。
-	int a = 1;
-	for (; a <= 5; a++){
-		int b = 1;
-		for (; b <= 5; b++){
-			int c = 1;
-			for (; c <= 5; c++){
-				int d = 1;
-				for (; d <= 5; d++){
-					int e = 1;
-					for (; e <= 5; e++){
-						//
-						if (((b == 2) + (a == 3)) == 1 && \
-							((b == 2) + (e == 4)) == 1 && \
-							((c == 1) + (d == 2)) == 1 && \
-							((c == 5) + (d == 3)) == 1 && \
-							((e == 4) + (a == 1)) == 1 ){
-							
-							unsigned char flags = 0;
-							//0000 0001
-							//0000 0100 |
-							//0000 0101
-							flags |= (1 << (a - 1));
-							flags |= (1 << (b - 1));
-							flags |= (1 << (c - 1));
-							flags |= (1 << (d - 1));
-							flags |= (1 << (e - 1));
-							if (flags == 0x1F){
-								printf("a: %d, b: %d, c: %d, d: %d, e: %d\n", a, b, c, d, e);
-							}
-							//if (flags == 0x1F || flags == 0xF || \
-							//	flags == 0x7 || flags == 0x3 || \
-							//	flags == 0x1){
-							//	printf("a: %d, b: %d, c: %d, d: %d, e: %d\n", \
-							//		a, b, c, d, e);
-							//}
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
-void Reverse(char str[], int start, int end)
-{
-	while (start < end){
-		char temp = str[start];
-		str[start] = str[end];
-		str[end] = temp;
-		start++, end--;
-	}
-}
-
-void ShiftLeft(char arr[], int len, int num)
-{
-	num %= len;
-	//abcd 1234
-	//dcba 4321
-	//1234abcd
-	Reverse(arr, 0, num - 1); //[]
-	Reverse(arr, num, len - 1);
-	Reverse(arr, 0, len - 1);
-	//version1
-	/*while (num){
-		char tmp = arr[0];
-		int j = 0;
-		for (; j < len - 1; j++){
-			arr[j] = arr[j + 1];
-		}
-		arr[len - 1] = tmp;
-		num--;
-	}*/
+	*returnsize = total;
+	return ret;
 }
 
 int main()
 {
-	//字符串左旋
-	//题目内容 :
-	//实现一个函数，可以左旋字符串中的k个字符。
-	//	例如：
-	//	ABCD左旋一个字符得到BCDA
-	//	ABCD左旋两个字符得到CDAB
-
-	char arr[] = "abcd1234";
-	int len = strlen(arr);
-
-	printf("%s\n", arr);
-	ShiftLeft(arr, len, 4);
-
-	printf("%s\n", arr);
-
-	
-
-
-
-
-	//声明一个指向含有10个元素的数组的指针，
-	//其中每个元素是一个函数指针，该函数的返回值是int，
-	//参数是int*，正确的是（ ）
-
-	//int aa[2][5] = { 10, 9, 8, 7, 6,   5, 4, 3, 2, 1 };
-	//int *ptr1 = (int *)(&aa + 1);
-	//int *ptr2 = *(aa + 1);
-	//printf("%d,%d", *(ptr1 - 1), *(ptr2 - 1));
-
-	//int a[5] = { 5, 4, 3, 2, 1 };
-	//int *ptr = (&a + 1);
-	//printf("%d,%d", *(a + 1), *(ptr - 1));
-
-	//int(*)[10];
-
-	//int(*(*p)[10])(int*)
-
-
-	//int a;
-	/*int a[];*/
-
-	//int(*(*F)(int, int))(int);
-
-	//int(*(*F)(int, int))(int)
-
-
-	//如何定义一个int类型的指针数组，数组元素个数为10个
-	//int *arr[10];
-	//ShowRank();
-	//char killer = FindKiller();
-	//printf("%c\n", killer);
-	
-	//ShowYang();
-
-	/*unsigned char a = 200;
-	unsigned char b = 100;
-	unsigned char c = 0;
-	c = a + b;
-	printf("%d %d", a + b, c);*/
-	//char a[1000] = { 0 };
-	//int i = 0;
-	//for (i = 0; i<1000; i++)
-	//{
-	//	a[i] = -1 - i;
-	//}
-	//printf("%d", strlen(a)); //255
-
-
-	//调整数组使奇数全部都位于偶数前面
-	//但是，不要影响原始数据，稳定的算法，插入思想！
-	//int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-	//int num = sizeof(arr) / sizeof(arr[0]);
-	//SwapData(arr, num);
-
-
-
-	/*语言中哪一种形式声明了一个指向char类型变量的指针p，
-		p的值不可修改，但p指向的变量值可修改*/
-
-	//char c = 'a';
-	//char *p = &c;
-
-	//printf("hello bit1\n");
-	//printf("hello bit2\n");
-
-	//printf("hello bit3\n");
-
-	//printf("hello bit4\n");
-
-	//printf("hello bit5\n");
-
-	//printf("hello bit6\n");
-
-	system("pause");
+	int A[10] = { 1, 2, 0, 0 };
+	int returnsize = 0;
+	int* ret = Array_Integer(A, 4, 34, &returnsize);
+	for (int i = 0; i <= returnsize - 1; i++)
+	{
+		printf("%d", ret[i]);
+	}
 	return 0;
 }
+
+//题目4
+//旋转数组
+
+//void Reverse_Array(char arr[],int k)
+//{
+//	int length = 0, i = 0;
+//	while (arr[i] != '\0')
+//	{
+//		length++;
+//		i++;
+//	}
+//	k%=length;
+//	int begin = 0;
+//	int mid = k - 1;
+//	int end = length - 1;
+//	while (begin< mid)
+//	{
+//		int tmp = arr[mid];
+//		arr[mid] = arr[begin];
+//		arr[begin] = tmp;
+//		begin++;
+//		mid--;
+//	}
+//	mid = k;
+//	end = length - 1;
+//	while (mid < end)
+//	{
+//		int tmp = arr[end];
+//		arr[end] = arr[mid];
+//		arr[mid] = tmp;
+//		mid++;
+//		end--;
+//	}
+//	begin = 0;
+//	end = length - 1;
+//	while (begin < end)
+//	{
+//		int tmp = arr[end];
+//		arr[end] = arr[begin];
+//		arr[begin] = tmp;
+//		begin++;
+//		end--;
+//	}
+//}
+//int main()
+//{
+//	int k = 0, i = 0;
+//	char arr[20] = "abcABC";
+//	scanf("%d", &k);
+//	Reverse_Array(arr, k);
+//	while (arr[i] != '\0')
+//	{
+//		printf("%c", arr[i]);
+//		i++;
+//	}
+//	return 0;
+//}
+//题目3
+//合并两个有序数组 
+//方法3:时间复杂度为O(n),空间复杂度为O(m + n)
+
+//void IntegerArray(int arr1[],int m, int arr2[], int n)
+//{
+//	int i = m - 1, j = n - 1, idx = m + n - 1;
+//	while (j >= 0)
+//	{
+//		if (i >= 0 && arr1[i] >= arr2[j])
+//			arr1[idx--] = arr1[i--];
+//		else
+//			arr1[idx--] = arr2[j--];
+//	}
+//}
+//int main()
+//{
+//	int arr1[20] = { 1, 2, 3, 4 };
+//	int arr2[10] = { 2, 3, 4, 6, 8 };
+//	IntegerArray(arr1, 4, arr2, 5);
+//	for (int i = 0; i < 9; i++)
+//	{
+//		printf("%d ", arr1[i]);
+//	}
+//	return 0;
+//}
+
+//方法2：时间复杂度为O(m*n),空间复杂度为O(m + n)
+
+//int *IntegerArray(int arr[], int m,int data[],int n)
+//{
+//	int end = m - 1;
+//	int j = 0;
+//	for (j = 0; j < n; j++)
+//	{
+//		while (end >= 0 && data[j] <= arr[end])
+//		{
+//			arr[end + 1] = arr[end--];
+//		}
+//		arr[end + 1] = data[j];
+//		end = m + j;
+//	}
+//	return arr;
+//}
+//int main()
+//{
+//	int data[10] = { 4, 5, 6, 7 };
+//	int arr[20] = { 1, 2, 3, 4 };
+//	int i = 0;
+//	int *p = IntegerArray(arr, 4, data,4);
+//	for (i = 0; i < 8; i++)
+//	{
+//		printf("%d ", p[i]);
+//	}
+//	return 0;
+//}
+//方法1：时间复杂度为O(m + n),空间复杂度为O(m + n)
+
+//int *IntegerArray(int arr1[],int arr2[],int m,int n)
+//{
+//	assert(arr1 != NULL && arr2 != NULL);
+//    int *p = (int *)malloc(sizeof(int)* 200);
+//	assert(p != NULL);
+//	int idxm = 0, idxn = 0, i = 0;
+//	while (idxm < m && idxn < n)
+//	{
+//		if (arr1[idxm] <= arr2[idxn])
+//			p[i++] = arr1[idxm++];
+//		else
+//			p[i++] = arr2[idxn++];
+//	}
+//	while (idxm >= m && idxn < n)
+//		p[i++] = arr2[idxn++];
+//	while (idxn >= n && idxm < m)
+//		p[i++] = arr1[idxm++];
+//	arr1 = p;
+//	return arr1;
+//}
+//int main()
+//{
+//	int arr1[100] = { 1, 2, 3, 4, 5 };
+//	int arr2[100] = { 5, 6, 7, 8 };
+//	int*arr = IntegerArray(arr1, arr2, 5, 4);
+//	for (int i = 0; i < 9; i++)
+//	{
+//		printf("%d ", arr[i]);
+//	}
+//	return 0;
+//}
+//题目2
+//删除排序数组中的重复项
+
+//int main()
+//{
+//	int array[10] = { 0, 1, 1, 2, 3, 3, 3, 4, 4, 5 };
+//	//int array[10] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+//	//int array[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 9 };
+//	//int array[10] = { -0, -1, -1, -2, 3, -3, 3, 4, 4, 5 };//无序数据不成立
+//
+//	int count = 0;
+//
+//	for (int i = 0; i < 9; i++)
+//	{
+//		if (array[i] != array[i + 1])
+//		{
+//			array[i + 1 - count] = array[i + 1];
+//		}
+//		else
+//		{
+//			count++;
+//			if (i+1 == 9)
+//				array[i + 1 - count] = array[i + 1];
+//		}
+//	}
+//
+//	for (int i = 9; i >= 9 - count + 1; i--)
+//	{
+//		array[i] = 0;
+//	}
+//	for (int i = 0; i < 10-count; i++)
+//	{
+//		printf("%d ", array[i]);
+//	}
+//	printf("\n");
+//	return 0;
+//}
+//题目1
+//删除链表中等于给定值 val 的所有节点
+
+//typedef int SLTDataType;
+//typedef struct SListNode
+//{
+//	SLTDataType data;
+//	struct SListNode *next;
+//}Node;
+//Node *head = NULL;
+//Node *end = NULL;
+//void NodeFind()
+//{
+//	Node *tmp = head;
+//	while (tmp != NULL)
+//	{
+//		printf("%d ", tmp->data);
+//		tmp = tmp->next;
+//	}
+//	printf("\n");
+//}
+//void NodeInsert(SLTDataType val)
+//{
+//	Node *tmp = (Node*)malloc(sizeof(Node));
+//	tmp->data = val;
+//	tmp->next = NULL;
+//	if (head == NULL)
+//	{
+//		head = tmp;
+//		end = tmp;
+//	}
+//	else
+//	{
+//		end->next = tmp;
+//		end = tmp;
+//	}
+//}
+//void NodeDelete(SLTDataType val)
+//{
+//	if (head == NULL)
+//	{
+//		printf("链表为空，无需删除\n");
+//		return;
+//	}
+//	Node *pre = head;
+//	Node *cur = head->next;
+//	while (cur != NULL)
+//	{
+//		if (cur->data == val)
+//		{
+//			pre->next = cur->next;
+//			free(cur);
+//		}
+//		else
+//		{
+//			pre = cur;
+//		}
+//		cur = pre->next;
+//	}
+//	Node *NewHead = head;
+//	if (head->data == val)
+//	{
+//		NewHead = head->next;
+//		free(head);
+//	}
+//	head = NewHead;
+//}
+//int main()
+//{
+//	NodeInsert(1);
+//	NodeInsert(2);
+//	NodeInsert(3);
+//	NodeInsert(4);
+//	NodeInsert(5);
+//	NodeInsert(6);
+//
+//	NodeFind();
+//
+//	NodeDelete(4);
+//
+//	NodeFind();
+//	return 0;
+//}
