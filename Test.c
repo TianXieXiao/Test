@@ -1,371 +1,441 @@
 #include<stdio.h>
-#include<string.h>
 #include<time.h>
-#include<stdbool.h>
 
-unsigned long long Fib(int n)
+//#define ADD 1
+//#define SUB 2
+//#define MUL 3
+//#define DIV 4
+//#define MOD 5
+//#define QUIT 0
+
+enum OP_STATE_ENUM
 {
-	if(n <= 2)
-		return 1;
+	QUIT = 0,
+	ADD,
+	SUB,
+	MUL,
+	DIV,
+	MOD
+};
 
-	unsigned long long fib, fib1=1, fib2=1;
-	for(int i=3; i<=n; ++i)
-	{
-		fib = fib1 + fib2;
-		fib1 = fib2;
-		fib2 = fib;
-	}
-	return fib;
+void menu()
+{
+	system("title 简易计算器");
+	system("mode con cols=35 lines=11");
+	system("color 0F");
+
+	printf("**********************************\n");
+	printf("*         简 易 计 算 器         *\n");
+	printf("**********************************\n");
+	printf("* [1]  Add          [2] Sub      *\n");
+	printf("* [3]  Mul          [4] Div      *\n");
+	printf("* [5]  Mod          [6] Quit     *\n");
+	printf("**********************************\n");
+	
 }
 
 void main()
 {
-	int n;
-	while(1)
+	int op1, op2, result;
+	int select = 1;
+	while(select)
 	{
-		printf("input n:>");
-		scanf("%d", &n);
-		if(n == -1)
+		menu();
+		printf("请选择:>");
+		scanf("%d", &select);
+		if(select == QUIT)
 			break;
+		
+		printf("请输入操作数 op1 和 op2:>");
+		scanf("%d %d", &op1, &op2);
 
-		size_t result = Fib(n);
-		printf("第%d项的斐波那契值 = %ul\n", n, result);
-	}
-}
-
-/*
-unsigned long long Fib(int n)
-{
-	if(n <= 2)
-		return 1;
-	else
-		return Fib(n-1) + Fib(n-2);
-}
-
-void main()
-{
-	int n;
-	while(1)
-	{
-		printf("input n:>");
-		scanf("%d", &n);
-		if(n == -1)
+		switch(select)
+		{
+			//魔鬼数字
+		case ADD:
+			result = op1 + op2;
 			break;
-
-		size_t result = Fib(n);
-		printf("第%d项的斐波那契值 = %d\n", n, result);
-	}
-}
-
-/*
-void print(int n)
-{
-	if (n > 9)
-	{
-		print(n / 10);  //123  12 1
-	}
-	printf("%d ", n % 10);
-}
-
-int main()
-{
-	int num = 1234;
-	print(num); //1 2 3 4
-	return 0;
-}
-
-
-
-/*
-//n! = 1*2*3*.....*n
-//OJ 迭代  循环
-//递归
-
-size_t Fact(int n)
-{
-	size_t ret = 1;
-	for(int i=1; i<=n; ++i)
-	{
-		ret *= i;
-	}
-	return ret;
-}
-
-void main()
-{
-	int n;
-	while(1)
-	{
-		printf("input n:>");
-		scanf("%d", &n);
-		if(n == -1)
+		case SUB:
+			result = op1 - op2;
 			break;
-
-		size_t result = Fact(n);
-		printf("%d! = %d\n", n, result);
-	}
-}
-
-
-/*
-size_t Fact(int n)
-{
-	if(n == 1)
-		return 1;
-	else
-		return n*Fact(n-1);
-}
-
-void main()
-{
-	int n;
-	while(1)
-	{
-		printf("input n:>");
-		scanf("%d", &n);
-		if(n == -1)
+		case MUL:
+			result = op1 * op2;
 			break;
-
-		size_t result = Fact(n);
-		printf("%d! = %d\n", n, result);
-	}
-}
-
-/*
-size_t Fact(int n)
-{
-	size_t ret = 1;
-	for(int i=1; i<=n; ++i)
-	{
-		ret *= i;
-	}
-	return ret;
-}
-
-void main()
-{
-	int n;
-	while(1)
-	{
-		printf("input n:>");
-		scanf("%d", &n);
-		if(n == -1)
+		case DIV:
+			result = op1 / op2;
 			break;
+		case MOD:
+			result = op1 % op2;
+			break;
+		default:
+			printf("输入的命令有误，请重新输入......\n");
+			continue;
+		}
 
-		size_t result = Fact(n);
-		printf("%d! = %d\n", n, result);
+		printf("result = %d\n", result);
+		system("pause");
 	}
+	printf("Good Bye!!!\n");
 }
 
 /*
-#include"Max.h" 
-#include"Min.h"
+typedef struct  Test_struct
+{
+	int a;
+	int b;
+	int c;
+}Test_struct;
+
+//枚举常量
+typedef enum Test_enum
+{
+	A,
+	B = 1,
+	C,
+	D,
+	E
+}Test_enum;
+
+//联合 公共体
+typedef union Test_union
+{
+	int a;
+	double b;
+	char c;
+}Test_union;
 
 void main()
 {
-	int a = 1;
-	int b = 2;
-	int result = Max(a, b);
-	printf("max value = %d\n", result);
-	result = Min(a, b);
-	printf("min value = %d\n", result);
+	printf("Test_struct size = %d\n", sizeof(Test_struct));
+	printf("Test_union size = %d\n", sizeof(Test_union));
+
+}
+
+
+/*
+void main()
+{
+	Test_enum t = A;
+	printf("A = %d\n", A);
+	printf("B = %d\n", B);
+	printf("C = %d\n", C);
+
+	printf("size = %d\n", sizeof(Test_enum));
 }
 
 /*
-int Max(int a, int b);
-void fun();
+typedef struct Test
+{
+	int data[10000];
+	double d[1000];
+}Test;
+
+void fun1(Test t)
+{
+	t.data[0] = 0;
+}
+void fun2(Test *pt)
+{
+	pt->data[0] = 0;
+}
 
 void main()
 {
-	int a = 1;
-	int b = 2;
-	int result = Max(a, b);
+	Test tt;
+
+	time_t begin = clock();
+	for(int i=0; i<100000; ++i)
+	{
+		fun1(tt);
+	}
+	time_t end = clock();
+	printf("time = %u\n", end - begin);
+
+	
+	time_t begin1 = clock();
+	for(int i=0; i<100000; ++i)
+	{
+		fun2(&tt);
+	}
+	time_t end1 = clock();
+	printf("time1 = %u\n", end1 - begin1);
+}
+
+/*
+typedef  struct Student 
+{
+	char name[10];
+	int age;
+	char sex[3];
+	float weight;
+}Student;
+
+void main()
+{
+	struct Student s;
+	//strcpy(s.name, "abc");
+	Student a;
+}
+
+/*
+typedef struct Date
+{
+	int year;
+	int month;
+	int day;
+}Date;
+
+typedef struct Time
+{
+	int hour;
+	int minute;
+	int second;
+}Time;
+
+typedef struct Test
+{
+	int a;
+	char ch;
+	float f[10];
+	double *pd;
+	Time te;
+}Test;
+
+void main()
+{
+	Test t;
+	t.a = 10;
+	
+	Test *pt = &t;
+	pt->a = 100;
+}
+
+/*
+typedef struct Date
+{
+	int year;
+	int month;
+	int day;
+}Date;
+
+typedef struct Time
+{
+	int hour;
+	int minute;
+	int second;
+}Time;
+
+typedef struct DateTime
+{
+	Date date;
+	Time time;
+}DateTime;
+
+void main()
+{
+	DateTime birthday = {{2000,4,4}, {21,9,30}};
+}
+
+/*
+typedef struct Student 
+{
+	char name[10];
+	int age;
+	char sex[3];
+	float weight;
+}Student;
+
+
+void main()
+{
+	Student s = {"比特", 10, "男", 98.5};
+
+	Student s1;
+	//s1.name = "放假啦";
+	strcpy(s1.name, "放假啦");
+	s1.age = 20;
+	strcpy(s1.sex,"女");
+	s1.weight = 12.34;
+}
+
+/*
+typedef struct Student 
+{
+	char name[10];
+	int age;
+	char sex[3];
+	float weight;
+}Student, *pStu;
+
+typedef unsigned long u_long;
+
+void main()
+{
+	Student s; //结构体变量
+	pStu ptr;
+	ptr = &s;
+}
+
+/*
+struct
+{
+	char name[10];
+	int age;
+	char sex[3];
+	float weight;
+}stu;
+
+void main()
+{
+	//struct Student s; //结构体变量
+}
+
+
+/*
+struct Student
+{
+	char name[10];
+	int age;
+	char sex[3];
+	float weight;
+}s1, s2;
+
+void main()
+{
+	struct Student s; //结构体变量
+}
+
+/*
+int fun(int a, int b)
+{
+	int value = a + b;
+	return value;
+}
+
+//argument count
+//argument value
+//命令行参数
+void main(int argc, char *argv[])
+{
+	//fun(1,2);
+}
+
+/*
+int fun(int a, int b)
+{
+	int value = a + b;
+	return value;
+}
+void main()
+{
+	int a = 10;
+	int b = 20;
+
+	int (*pFun)(int, int); //定义了一个指针
+	
+	pFun = &fun;                 //pFun = fun
+	int result = (*pFun)(a, b);  //pFun(a, b)
+	
 	printf("result = %d\n", result);
-	fun();
 }
-
-void fun()
-{
-	printf("aaaaaaaaaaa\n");
-	Max(1,2);
-}
-
-int Max(int a, int b)
-{
-	fun();
-	return a > b ? a : b;
-}
-
-
 
 
 /*
-void main()
+//函数名本身就充当了函数的入口地址
+int fun(int a, int b)
 {
-	char str[20] = "HelloC++";
-	int len = strlen(str);  //字符串有效长度
-	printf("len = %d\n", len);
-
-	char str1[20] = "Hello ";
-	char str2[] = "C++";
-	printf("str1 = %s\n", str1);
-	strcat(str1, str2);  //字符串的链接
-	printf("str1 = %s\n", str1);
-
-	char str3[20] = "Hello ";
-	char str4[] = "C++";
-	printf("str3 = %s\n", str3);
-	strcpy(str3, str4);  //字符串的拷贝
-	printf("str3 = %s\n", str3);
-
-	char str5[] = "Hello falfj";
-	char str6[] = "Hello";
-	int ret = strcmp(str5, str6); //字符串的比较
-	printf("ret = %d\n", ret);
+	int value = a + b;
+	return value;
 }
 
-/*
-int Max(int a, int b)
+int* fun1(int a, int b)
 {
-	return a > b ? a : b;
+	static int res = a + b;
+	return &res;
 }
 
 void main()
 {
 	int a = 10;
-	int b = 30;
-	int c = 20;
-	int result = Max( Max(a, b), c );
-	printf("result = %d\n", result);
-
-}
-
-/*
-void fun()
-{
-	printf("This is fun().\n");
-}
-
-void PrintFun(int n)
-{
-	for(int i=0; i<n; ++i)
-	{
-		fun();
-	}
-}
-void main()
-{
-	int n;
-	printf("input n:>");
-	scanf("%d", &n);
-
-	PrintFun(n);
-}
-
-
-/*
-//效率不高  改进
-bool IsPrime(int value)
-{
-	for(int i=2; i<value/2; ++i)
-	{
-		if(value % i == 0)
-			return false;
-	}
-	return true;
-}
-
-bool IsLeap(int year)
-{
-	return (((year % 4 == 0) && (year % 100 != 0)) || (year % 400==0));
-}
-
-
-int Increment()
-{
-	static int num = 0;
-	num +=1;
-	return num;
-}
-
-void main()
-{
-	int num = Increment();  //num = num + 1;
-	printf("num = %d\n", num);
-
-	num = Increment(num);  //num = num + 1;
-	printf("num = %d\n", num);
-
-	num = Increment(num);  //num = num + 1;
-	printf("num = %d\n", num);
-}
-
-/*
-void main()
-{
-	int num = 0;
-	num = Increment(num);  //num = num + 1;
-	printf("num = %d\n", num);
-
-	num = Increment(num);  //num = num + 1;
-	printf("num = %d\n", num);
-
-	num = Increment(num);  //num = num + 1;
-	printf("num = %d\n", num);
-}
-
-/*
-void main()
-{
-	int value;
-	while(1)
-	{
-		printf("Please input a number[以-1结束]:>");
-		scanf("%d", &value);
-		if(value == -1)
-			break;
-
-		//bool flag = IsPrime(value);
-		int flag = IsLeap(value);
-
-		if(flag == 0) 
-			printf("OK.\n");
-		else
-			printf("NO.\n");
-	}
-}
-
-/*
-//返回值  函数名  (参数列表)  {函数体}
-int Sum(int a, int b)
-{
-	int result = a + b;
-	return result;
-}
-int Max(int a, int b)
-{
-	return a > b ? a : b;   //选择结构
-}
-
-void Swap(int x, int y)
-{
-	int tmp = x;
-	x = y;
-	y = tmp;
-}
-void  main()
-{
-	int a = 100;
 	int b = 20;
-	int result = Sum(a, b);
+
+	int (*pFun)(int, int); //定义了一个指针
+
+	pFun = fun;
+	int result = pFun(a, b);
+
 	printf("result = %d\n", result);
-	int max_value = Max(a, b);
-	printf("max value = %d\n", max_value);
-	//交换两数
-	printf("before: a = %d, b = %d\n", a, b);
-	Swap(a, b);
-	printf("after: a = %d, b = %d\n", a, b);
+
+	int *ptr = fun1(a, b);
+	printf("result = %d\n", *ptr);
 }
+
+/*
+int fun(int a, int b)
+{
+	int value = a + b;
+	return value;
+}
+
+void main()
+{
+	int a = 10;
+	int b = 20;
+
+	int (*pFun)(int, int); //定义了一个指针
+	pFun = &fun;
+
+	int result = (*pFun)(a, b);
+	
+	printf("result = %d\n", result);
+}
+
+/*
+void main()
+{
+	int ar[3] = {1,2,3};
+	int (*p)[3] = &ar;
+
+	int a = 1;
+	int b = 2;
+	int c = 3;
+
+	int *br[3] = {&a, &b, &c};
+}
+
+/*
+//a b 入参
+//*v  出参
+void fun(int *v, int a, int b)
+{
+	*v = a + b;
+}
+void main()
+{
+	int a = 10;
+	int b = 20;
+
+	int result;
+	fun(&result, a, b);
+	printf("result = %d\n", result);
+}
+
+/*
+int fun(int a, int b)
+{
+	int value = a + b;
+	return value;
+}
+
+void main()
+{
+	int a = 10;
+	int b = 20;
+
+	int result = fun(a, b);
+	printf("result = %d\n", result);
+}
+
 
 /*
 void Swap(int *a, int *b)
@@ -374,33 +444,12 @@ void Swap(int *a, int *b)
 	*a = *b;
 	*b = tmp;
 }
-void  main()
+void main()
 {
-	int a = 100;
+	int a = 10;
 	int b = 20;
-	int result = Sum(a, b);
-	printf("result = %d\n", result);
-	int max_value = Max(a, b);
-	printf("max value = %d\n", max_value);
-	//交换两数
-	printf("before: a = %d, b = %d\n", a, b);
+	printf("a = %d, b = %d\n", a, b);
 	Swap(&a, &b);
-	printf("after: a = %d, b = %d\n", a, b);
-}
-
-/*
-void main()
-{
-	time_t te;
-	time(&te);
-	printf("%s\n", ctime(&te));
-}
-
-/*
-void main()
-{
-	char *str = "Hellohflkakfl";  //字符串
-	int len = strlen(str);
-	printf("str length = %d\n", len);
+	printf("a = %d, b = %d\n", a, b);
 }
 */
