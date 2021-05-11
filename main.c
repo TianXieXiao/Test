@@ -1,58 +1,45 @@
-#include "contact.h"
 
-static void Menu()
+#include <stdio.h>
+
+// 如果想要通过修改形参来达到对外部实参的修改
+// 必须要传递实参的地址
+void Swap1(int* left, int* right)
 {
-	printf("+----------------Menu---------------+\n");
-	printf("|  1. Add     2. Delete   3. Search |\n");
-	printf("|  4. Modify  5. Show     6. Clear  |\n");
-	printf("|  7. Sort    0. Quit               |\n");
-	printf("+-----------------------------------+\n");
-	printf("Please Select# ");
+	printf("%p\n", left);
+	printf("%p\n", right);
+
+	int temp = *left;
+	*left = *right;
+	*right = temp;
 }
+
+void Swap2(int** left, int** right)
+{
+	printf("%p\n", left);
+	printf("%p\n", right);
+
+	int* temp = *left;
+	*left = *right;
+	*right = temp;
+}
+
 
 int main()
 {
-	contact_t *ct = GetContact();
+	int a = 10;
+	int b = 20;
 
-	int quit = 0;
-	while (!quit)
-	{
-		int select = 0;
-		Menu();
-		scanf("%d", &select);
-		switch (select){
-		case 1:
-			AddPerson(&ct);
-			break;
-		case 2:
-			DelPerson(ct);
-			break;
-		case 3:
-			SearchPerson(ct);
-			break;
-		case 4:
-			//ModifyPerson();
-			break;
-		case 5:
-			ShowContact(ct);
-			break;
-		case 6:
-			ClearContact(ct);
-			break;
-		case 7:
-			SortContact(ct); //qsort(); 排序字符串，需要注意！！
-			break;
-		case 0:
-			quit = 1;
-			SaveFile(ct);
-			free(ct);
-			break;
-		default:
-			printf("Enter Error, Try Again!\n");
-			break;
-		}
-	}
-	printf("ByeBye！\n");
-	system("pause");
+
+	int* pa = &a;
+	int* pb = &b;
+
+	printf("%p\n", &a);
+	printf("%p\n", &b);
+
+	// 如果实参是值类型，函数的参数只需为一级指针即可
+	Swap1(&a, &b);
+
+	// 如果实参是一级指针，函数的形参必须为二级指针
+	Swap2(&pa, &pb);   // pa->b   pb->a
 	return 0;
 }
