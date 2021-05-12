@@ -1,21 +1,42 @@
- #pragma warning(disable:4996) 
 #include <stdio.h>
-int Count(int x)
-{
-	int count = 0;
-	while (x)
-	{
-		if ((x & 1) == 1)
-			count++;
-		x >>= 1;
-	}
-	return count;
-}
+
+#include "SeqList.h"
+
+
 int main()
 {
-	int x = 0;
-	scanf("%d", &x);
-	int ret = Count(x);
-	printf("%d", ret);
+	SeqList s;
+	SeqListInit(&s, 6);
+	SeqListPushBack(&s, 1);
+	SeqListPushBack(&s, 2);
+	SeqListPushBack(&s, 3);
+	SeqListPushBack(&s, 4);
+	SeqListPushBack(&s, 5);
+	SeqListPushBack(&s, 6);
+	printf("%d\n", SeqListCapacity(&s));
+	printf("%d\n", SeqListSize(&s));
+	SeqListPrint(&s);
+
+	SeqListInsert(&s, 2, 0);
+	SeqListPrint(&s);
+
+	SeqListErase(&s, 2);
+	SeqListPrint(&s);
+
+	SeqListPopBack(&s);
+	SeqListPopBack(&s);
+	SeqListPopBack(&s);
+	printf("%d\n", SeqListCapacity(&s));
+	printf("%d\n", SeqListSize(&s));
+	SeqListPrint(&s);
+
+	SeqListPopBack(&s);
+	SeqListPopBack(&s);
+	SeqListPopBack(&s);
+	printf("%d\n", SeqListCapacity(&s));
+	printf("%d\n", SeqListSize(&s));
+	SeqListPrint(&s);
+
+	SeqListPopBack(&s);
 	return 0;
 }
