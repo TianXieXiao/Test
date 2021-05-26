@@ -1,218 +1,193 @@
  #pragma warning(disable:4996) 
 #include <stdio.h>
-//输入一个这整数，判断这个数中9的个数
-//int is_prime(int n)
-//{
-//	int count = 0;
-//	while (n)
-//	{
-//		if (n % 10 == 9)
-//			count++;
-//		n /= 10;
-//	}
-//	return count;
-//}
-//int main()
+//求Sn=a+aa+aaa+aaaa+aaaaa的前5项之和，其中a是一个数字，
+//例如：2 + 22 + 222 + 2222 + 22222
+//int Sum(int n)
 //{
 //	int i = 0;
-//	scanf("%d", &i);
-//	printf("%d\n", is_prime(i));
-//	return 0;
-//}
-//找出10个整数中的最大值
-//方法一：利用ar[]开辟动态数组》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》1
-//int main()
-//{
-//	int i = 0;
-//	int ar[] = { 0 };
-//	while (ar[i] != '\n')
+//	int sum = 0;
+//	int a = 0;
+//	for (; i < 5; i++)
 //	{
-//		scanf("%d", &ar[i++]);
+//		a = a * 10 + n;
+//		sum = sum + a;
 //	}
-//	
-//	//while (ar[i++] != '\0')
-//	//{
-//	//	scanf("%d", ar[i]);
-//
-//	//}
-//	//scanf("%d", ar[i++]);
-//	printf("%d", i);
-//	return 0;
-//}
-//提前开好空间时间复杂度为O（1）
-//int main()
-//{	
-//	int ar[] = {-1,-2,-3,-4,-5,-6,-7,-8,-9,-23};
-//	int max = ar[0];
-//	for (int i = 1; i < 10; i++)
-//	{
-//		if (max < ar[i])
-//			max = ar[i];
-//	}
-//	printf("%d\n", max);
-//	return 0;
-//}
-//利用calloc()函数开辟动态数组空间求其中最大的整数
-//#include <stdlib.h>
-//int main()
-//{
-//	int i, n;
-//	int* pdata;
-//	printf("请问您准备存储多少个数据:");
-//	scanf("%d", &i);
-//	pdata = (int*)calloc(i, sizeof(int));
-//	printf("请输入：");
-//	for (n = 0; n < i; ++n)
-//	{
-//		scanf("%d", &pdata[n]);
-//	}
-//	printf("您已经存储了以下%d个数据: ", i);
-//	for (n = 0; n < i; ++n)
-//	{
-//		printf("%d ", pdata[n]);
-//	}
-//		printf("\n");
-//	int max = pdata[0];
-//	for (n = 1; n < i; n++)
-//	{
-//		if (max < pdata[n])
-//			max = pdata[n];
-//	}
-//	printf("您输入的数据中%d最大！\n", max);
-//	free(pdata);
-//	return 0;
-//}
-////请输入一个范围，并打印该范围内的素数以及个数
-//int is_prime(int b, int e)
-//{
-//	int i = 2;
-//	int count = 0;
-//	for (b; b <= e; b++)
-//	{
-//		if (b >5)
-//		{
-//			for (i; i < b / 2; i++,count)
-//			{
-//				if (b%i == 0)
-//				{
-//					break;
-//				}
-//				else
-//				{
-//					printf("%d", i);
-//				}
-//			}
-//		}
-//		
-//		else if (b=2)
-//		{
-//			printf("%d", b);
-//			count++;
-//		}
-//		else if (b>2&&b<=5)
-//		{
-//			for (i; i < b; i++,count++)
-//			{
-//				if (b%i == 0)
-//					break;
-//				printf("%d", i);
-//			}
-//		}
-//	}
-//	return count;
-//}
-//int main()
-//{
-//	int begin = 0;
-//	int end = 0;
-//	while (1)   //判断输入的区间是否在自然数中求质数的合理区间[2,n]内
-//	{
-//		scanf("%d%d", &begin, &end);     
-//		if (begin > end|| begin<=1)
-//		{
-//			printf("请输入正确的范围：");
-//		}
-//		else
-//		{
-//			break;
-//		}	
-//	}
-//	int a = 6;
-//	int b = 10;
-//	int c = is_prime(a, b);
-////	printf("该范围内的素数有%d",c );
-////	return 0;
-//	/*do
-//	{
-//		switch (juDge(begin, end))
-//		{
-//		case 0:
-//			scanf("%d-%d", &begin, &end);
-//			break;
-//		case 1:
-//			printf("请输入正确的范围~:");
-//
-//		default:
-//		}
-//	} while (begin > end);*/
-//	
-//}
-////
-//int main()
-//{
-//	int i, j;
-//	for (i = 100; i <= 200; ++i)
-//	{
-//		for (j = 2; j < i; ++j)
-//		{
-//			if (i%j == 0)
-//				break;
-//		
-//		}
-//		if (j==i)
-//		printf("%d", i);
-//	}
-//	return 0;
-//}
-//void  DivideInteger(int n)
-//{
-//	if (n > 9)
-//	{
-//		DivideInteger(n / 10);
-//	}
-//	printf("%d  ",n % 10);	
-//}
-//int main()
-//{
-//	int i = 0;
-//	scanf("%d", &i);
-//	printf("%d的每个数字分别是:",i);
-//	DivideInteger(i);
-//	return 0;
-//}
-//int Factorial(int n)
-//{
-//	if (n <= 1)
-//		return 1;
-//	else
-//		return n*Factorial(n - 1);
+//	return sum;
 //}
 //int main()
 //{
 //	int n = 0;
 //	scanf("%d", &n);
-//	printf("%d的阶乘为：%d\n", n,Factorial(n));
+//	printf("%d\n", Sum(n));
+//	return 0;
+//}
+//求出0～100000之间的所有“水仙花数”并输出。
+//“水仙花数”是指一个n位数，其各位数字的n次方之和确好等于该数本身，如:153＝1 ^ 3＋5 ^ 3＋3 ^ 3，则153是一个“水仙花数”。
+// void Narcissistic_Num()
+//{
+//	 int i = 0;
+//	 int count = 0;
+//	 for (; i <=100000; i++)
+//	 {
+//		 if (0 <= i <= 10)
+//		 {
+//			 int num_0 = i % 10;
+//			 if (i == (num_0))
+//				 printf("%d  ", i);
+//		 }
+//		 if (10 < i <= 100)
+//		 {
+//			 int num_0 = i % 10;
+//			 int num_1 = i / 10 % 10;
+//			 if (i == (num_0*num_0 + num_1*num_1))
+//				 printf("%d  ", i);
+//		 }
+//		 if (100 < i <= 1000)
+//		 {
+//			 int num_0 = i % 10;
+//			 int num_1 = i / 10 % 10;
+//			 int num_2 = i / 10 / 10 % 10;
+//			 if (i == (num_0*num_0*num_0 +
+//				 num_1*num_1*num_1 +
+//				 num_2*num_2*num_2))
+//				 printf("%d  ", i);
+//		 }
+//		 if (1000 < i <= 10000)
+//		 {
+//			 int num_0 = i % 10;
+//			 int num_1 = i / 10 % 10;
+//			 int num_2 = i / 10 / 10 % 10;
+//			 int num_3 = i / 10 / 10 / 10 % 10;
+//			 if (i == (num_0*num_0*num_0*num_0 +
+//				 num_1*num_1*num_1*num_1 +
+//				 num_2*num_2*num_2*num_2 +
+//				 num_3*num_3*num_3*num_3))
+//				 printf("%d  ", i);
+//		 }
+//		 if (10000 < i <= 100000)
+//		 {
+//			 int num_0 = i % 10;
+//			 int num_1 = i / 10 % 10;
+//			 int num_2 = i / 10 / 10 % 10;
+//			 int num_3 = i / 10 / 10 / 10 % 10;
+//			 int num_4 = i / 10 / 10 / 10 / 10 % 10;
+//			 if (i == (num_0*num_0*num_0*num_0*num_0 +
+//				 num_1*num_1*num_1*num_1*num_1 +
+//				 num_2*num_2*num_2*num_2*num_2 +
+//				 num_3*num_3*num_3*num_3*num_3 +
+//				 num_4*num_4*num_4*num_4*num_4))
+//				 printf("%d  ", i);
+//		 }
+//		 
+//	 }
+//}
+//int main()
+//{
+//	Narcissistic_Num();
+//	return 0;
+//}
+//打印菱形
+//int main()
+//{
+//	int i = 0;
+//	int line = 0;
+//	scanf("%d", &line);
+//	//打印上半部分
+//	for (i = 0; i < line; i++)
+//	{
+//		int j = 0;
+//		for (j = 0; j < line - 1 - i; j++)
+//		{
+//			printf(" ");
+//		}
+//		for (j = 0; j < 2 * i + 1; j++)
+//		{
+//			printf("*");
+//		}
+//		printf("\n");
+//	}
+//	//打印下半部分
+//	for (i = 0; i < line - 1; i++)
+//	{
+//		int j = 0;
+//		for (j = 0; j <= i; j++)
+//		{
+//			printf(" ");
+//		}
+//		for (j = 0; j <2 * (line - 1 - i) - 1; j++)
+//		{
+//			printf("*");
+//		}
+//		printf("\n");
+//	}
 //	return 0;
 //}
 //int main()
 //{
+//	int line = 0;
 //	int i = 0;
-//	int ret = 1;
-//	scanf("%d", &i);
-//	for (int n = 1; n <= i; ++n)
+//	scanf("%d", &line);//7
+//	//打印上半部分
+//	for (i = 0; i<line; i++)
 //	{
-//		ret *= n;
+//		//打印一行
+//		//打印空格
+//		int j = 0;
+//		for (j = 0; j<line - 1 - i; j++)
+//		{
+//			printf(" ");
+//		}
+//		//打印*
+//		for (j = 0; j<2 * i + 1; j++)
+//		{
+//			printf("*");
+//		}
+//		printf("\n");
 //	}
-//	printf("%d的阶乘为：%d", i, ret);
+//
+//
+//	//打印下半部分
+//	for (i = 0; i<line - 1; i++)
+//	{
+//		//打印一行
+//		int j = 0;
+//		for (j = 0; j <= i; j++)
+//		{
+//			printf(" ");
+//		}
+//		for (j = 0; j<2 * (line - 1 - i) - 1; j++)
+//		{
+//			printf("*");
+//		}
+//		printf("\n");
+//	}
 //	return 0;
 //}
+//求出0～100000之间的所有“水仙花数”并输出。
+//“水仙花数”是指一个n位数，其各位数字的n次方之和确好等于该数本身，如:153＝1 ^ 3＋5 ^ 3＋3 ^ 3，则153是一个“水仙花数”。
+#include <math.h>
+int main()
+{
+	int i = 0;
+	for (i = 0; i < 99999; i++)
+	{
+		int count = 1;
+		int sum = 0;
+		int tmp = i;
+		while (tmp / 10)
+		{
+			count++;
+			tmp /= 10;
+		}
+		tmp = i;
+		while (tmp)
+		{
+			sum += pow(tmp % 10, count);
+			tmp /= 10;
+		}
+		if (sum == i)
+			printf("%d ", i);
+	}
+	printf("\n");
+	return 0;
+}
